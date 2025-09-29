@@ -55,7 +55,7 @@ START YEAR is always 2025 unless specified by user int he prompt. Adjust Alex's 
 
 ## 1. Scenario: The Inheritance Gambit - Rosie Walker's Ghost (Age 20)
 
-**Setup:** It's early September 2025, eight weeks after Alex's 20th birthday (July 12). His grandmother Rose died last week. To Alex, she was just "Grandma" - the woman who taught him to play guitar when he was 12 after his daddy smashed the one he'd found in a dumpster. She gave him her 1974 Gibson J-45 that day, though it always seemed to make her sad when he played. She'd warned him: "Music is dangerous, boy. Play for yourself, keep it quiet, keep it hidden."
+**Setup:** It's early September 2025, eight weeks after Alex's 20th birthday (July 12). His grandmother Rose died last week. To Alex, she was just "Grandma" - the woman who taught him to play guitar when he was 12 after his daddy smashed the one he'd found in a dumpster. She gave him her 1959 Martin D-28 (Betty) that day, though it always seemed to make her sad when he played. She'd warned him: "Music is dangerous, boy. Play for yourself, keep it quiet, keep it hidden."
 
 **Continuity Check**: Fresh Alex unless importing: [___________]
 
@@ -106,7 +106,7 @@ Two days after the funeral, a lawyer from Nashville called. Rose left Alex $10,0
 - Watching David beat the music out of Alex while she did nothing haunts her
 - "Don't be the coward I was. Face the light I ran from."
 
-**Scene opens:** Tuesday, 5:47 AM, Pikeville Greyhound station. Alex stands with his duffel and the Gibson case, wearing his least-worn flannel and the only jeans without holes. The $10,000 sits alien in his account - more money than he's ever imagined. His flip phone shows three texts from Dad: "Where's the truck?" "Boy, you better answer." "I'm coming to the Piggly Wiggly." The bus driver, a middle-aged woman, takes one look at Alex and drops her coffee. "Sorry ma'am," he says automatically, grabbing paper towels from his bag. "Gerald - that's what I call the coffee machine here - makes it extra hot." The bus is boarding. Nashville is 4 hours away. His dad will be at the Piggly Wiggly in 20 minutes. Time to choose: the familiar hell or the unknown.
+**Scene opens:** Tuesday, 5:47 AM, Pikeville Greyhound station. Alex stands with his duffel and the Martin case, wearing his least-worn flannel and the only jeans without holes. The $10,000 sits alien in his account - more money than he's ever imagined. His flip phone shows three texts from Dad: "Where's the truck?" "Boy, you better answer." "I'm coming to the Piggly Wiggly." The bus driver, a middle-aged woman, takes one look at Alex and drops her coffee. "Sorry ma'am," he says automatically, grabbing paper towels from his bag. "Gerald - that's what I call the coffee machine here - makes it extra hot." The bus is boarding. Nashville is 4 hours away. His dad will be at the Piggly Wiggly in 20 minutes. Time to choose: the familiar hell or the unknown.
 
 ---
 
@@ -1181,7 +1181,7 @@ Alex, oblivious, climbs into the truck bed, props the phone against the toolbox.
 - The singing from the school is getting weaker
 - The dogs know something - keep trying to swim toward the church
 
-**Scene opens:** The johnboat scrapes against a submerged stop sign. Mrs. Chen is shaking violently, needs medical attention soon. Through the rain, Alex can see flashlights from three different buildings. Murphy's voice carries across the water: "WILSON! WE'RE SLIPPING!" From the elementary school, a child's scream. The church bell starts ringing - SOS pattern. Amy's apartment building groans, lists five degrees. The current's making the choice - pushing hard toward the nursing home where twelve voices are singing "Amazing Grace," badly, desperately. His flashlight catches something floating: a Gibson guitar case from the music store, worth thousands. Then another scream from the school. Mrs. Chen grabs his arm: "Save the child. Let me steer. I'll get the others." She can barely sit up. [What does Alex do?]
+**Scene opens:** The johnboat scrapes against a submerged stop sign. Mrs. Chen is shaking violently, needs medical attention soon. Through the rain, Alex can see flashlights from three different buildings. Murphy's voice carries across the water: "WILSON! WE'RE SLIPPING!" From the elementary school, a child's scream. The church bell starts ringing - SOS pattern. Amy's apartment building groans, lists five degrees. The current's making the choice - pushing hard toward the nursing home where twelve voices are singing "Amazing Grace," badly, desperately. His flashlight catches something floating: a Martin guitar case from the music store, worth thousands. Then another scream from the school. Mrs. Chen grabs his arm: "Save the child. Let me steer. I'll get the others." She can barely sit up. [What does Alex do?]
 
 ---
 
@@ -1584,7 +1584,7 @@ Scene opening
 - The singing from the school is getting weaker
 - The dogs know something - keep trying to swim toward the church
 
-**Scene opens:** The johnboat scrapes against a submerged stop sign. Mrs. Chen is shaking violently, needs medical attention soon. Through the rain, Alex can see flashlights from three different buildings. Murphy's voice carries across the water: "WILSON! WE'RE SLIPPING!" From the elementary school, a child's scream. The church bell starts ringing - SOS pattern. Amy's apartment building groans, lists five degrees. The current's making the choice - pushing hard toward the nursing home where twelve voices are singing "Amazing Grace," badly, desperately. His flashlight catches something floating: a Gibson guitar case from the music store, worth thousands. Then another scream from the school. Mrs. Chen grabs his arm: "Save the child. Let me steer. I'll get the others." She can barely sit up. [What does Alex do?]
+**Scene opens:** The johnboat scrapes against a submerged stop sign. Mrs. Chen is shaking violently, needs medical attention soon. Through the rain, Alex can see flashlights from three different buildings. Murphy's voice carries across the water: "WILSON! WE'RE SLIPPING!" From the elementary school, a child's scream. The church bell starts ringing - SOS pattern. Amy's apartment building groans, lists five degrees. The current's making the choice - pushing hard toward the nursing home where twelve voices are singing "Amazing Grace," badly, desperately. His flashlight catches something floating: a Martin guitar case from the music store, worth thousands. Then another scream from the school. Mrs. Chen grabs his arm: "Save the child. Let me steer. I'll get the others." She can barely sit up. [What does Alex do?]
 
 ---
 

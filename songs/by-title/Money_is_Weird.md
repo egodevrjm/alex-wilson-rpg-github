@@ -75,7 +75,7 @@ Money is weird, y’all…so, so weird.
 
 ## Performance Notes
 
-Instrumentation: Acoustic guitar (fingerpicked or strummed with a capo at the 2nd fret to give it a slightly brighter feel), slide guitar (using open D tuning for a swampy sound), upright bass (playing a simple, slightly behind-the-beat walking bass line), kick drum (steady quarter notes), fiddle (subtle fills and accents, perhaps a mournful solo in the bridge). Vocals should have a slightly raspy, lived-in quality. Harmonies in the chorus should be raw and slightly out-of-tune for a 'gang' feel. Tempo: Moderate, but with a slight drag to emphasize the weariness in the lyrics. Dynamic range: Build from a quiet verse to a louder, more energetic chorus. The fiddle should be played with a vibrato-rich, slightly mournful tone. The slide guitar should have a slightly distorted, gritty sound. The acoustic guitar can be a Martin D-28, Gibson J-45, or similar dreadnought.
+Instrumentation: Acoustic guitar (fingerpicked or strummed with a capo at the 2nd fret to give it a slightly brighter feel), slide guitar (using open D tuning for a swampy sound), upright bass (playing a simple, slightly behind-the-beat walking bass line), kick drum (steady quarter notes), fiddle (subtle fills and accents, perhaps a mournful solo in the bridge). Vocals should have a slightly raspy, lived-in quality. Harmonies in the chorus should be raw and slightly out-of-tune for a 'gang' feel. Tempo: Moderate, but with a slight drag to emphasize the weariness in the lyrics. Dynamic range: Build from a quiet verse to a louder, more energetic chorus. The fiddle should be played with a vibrato-rich, slightly mournful tone. The slide guitar should have a slightly distorted, gritty sound. 
 
 ---
 *File: Money_is_Weird.md*  

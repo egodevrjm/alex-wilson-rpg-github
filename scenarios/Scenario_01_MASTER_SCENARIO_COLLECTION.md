@@ -17,7 +17,7 @@
 
 - **Best Friend:** Tommy Crawford  
 - **Truck:** "Dolly" (an old Ford F-150 or Ranger)  
-- **Primary Guitar:** MawMaw's 1974 Gibson J-45 (or 1960 Martin D-28, as specified).
+- **Primary Guitar:** MawMaw's 1959 Martin D-28 (Betty).
 
 ---
 
@@ -48,7 +48,7 @@
 
 ## 1\. Scenario: The Inheritance Gambit \- Rosie Walker's Ghost (Age 20\)
 
-**Setup:** It's early September 2025, eight weeks after Alex's 20th birthday. His grandmother Rose died last week. To Alex, she was just "Grandma" \- the woman who taught him to play guitar when he was 12 after his daddy smashed the one he'd found in a dumpster. She gave him her 1974 Gibson J-45 that day. She'd warned him: "Music is dangerous, boy. Play for yourself, keep it quiet, keep it hidden."
+**Setup:** It's early September 2025, eight weeks after Alex's 20th birthday. His grandmother Rose died last week. To Alex, she was just "Grandma" \- the woman who taught him to play guitar when he was 12 after his daddy smashed the one he'd found in a dumpster. She gave him her 1959 Martin D-28 that day. She'd warned him: "Music is dangerous, boy. Play for yourself, keep it quiet, keep it hidden."
 
 **Continuity Check**: Fresh Alex unless importing: \[\_\_\_\_\_\_\_\_\_\_\_\]
 

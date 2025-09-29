@@ -10,7 +10,7 @@
 
 - **Best Friend:** Tommy Crawford  
 - **Truck:** "Dolly" (an old Ford F-150 or Ranger)  
-- **Primary Guitar:** MawMaw's 1974 Gibson J-45 (or 1960 Martin D-28, as specified).
+- **Primary Guitar:** MawMaw's 1959 Martin D-28 (Betty).
 
 ---
 
@@ -41,7 +41,7 @@
 
 ## 1\. Scenario: The Inheritance Gambit \- Rosie Walker's Ghost (Age 20\)
 
-**Setup:** It's early September 2025, eight weeks after Alex's 20th birthday. His grandmother Rose died last week. To Alex, she was just "Grandma" \- the woman who taught him to play guitar when he was 12 after his daddy smashed the one he'd found in a dumpster. She gave him her 1974 Gibson J-45 that day. She'd warned him: "Music is dangerous, boy. Play for yourself, keep it quiet, keep it hidden."
+**Setup:** It's early September 2025, eight weeks after Alex's 20th birthday. His grandmother Rose died last week. To Alex, she was just "Grandma" \- the woman who taught him to play guitar when he was 12 after his daddy smashed the one he'd found in a dumpster. She gave him her 1959 Martin D-28 that day. She'd warned him: "Music is dangerous, boy. Play for yourself, keep it quiet, keep it hidden."
 
 **Continuity Check**: Fresh Alex unless importing: \[\_\_\_\_\_\_\_\_\_\_\_\]
 
@@ -67,7 +67,7 @@ Two days after the funeral, a lawyer from Nashville called. Rose left Alex $10,0
 - He can't reveal he's Rosie Walker's grandson until after the Bluebird performance.  
 - "Don't be the coward I was. Face the light I ran from."
 
-**Scene opens:** Tuesday, 5:47 AM, Pikeville Greyhound station. Alex stands with his duffel and the Gibson case. The $10,000 sits alien in his account. His flip phone shows three texts from Dad: "Where's the truck?" "Boy, you better answer." "I'm coming to the Piggly Wiggly." The bus is boarding. Nashville is 4 hours away. His dad will be at the Piggly Wiggly in 20 minutes. Time to choose: the familiar hell or the unknown.
+**Scene opens:** Tuesday, 5:47 AM, Pikeville Greyhound station. Alex stands with his duffel and the Martin case. The $10,000 sits alien in his account. His flip phone shows three texts from Dad: "Where's the truck?" "Boy, you better answer." "I'm coming to the Piggly Wiggly." The bus is boarding. Nashville is 4 hours away. His dad will be at the Piggly Wiggly in 20 minutes. Time to choose: the familiar hell or the unknown.
 
 ---
 
@@ -540,7 +540,7 @@ The sheriff has given them until dawn to disperse before mass arrests begin. The
 **Starting Stats:**
 
 - **Cash:** $437 | **Bank:** $2,800  
-- **Guitars:** 1959 Martin D-28 \+ 1974 Gibson J-45  
+- **Guitars:** 1959 Martin D-28
 - **Vehicle:** 2001 Ford Ranger (146k miles)  
 - **Socials:** None (flip phone only)
 

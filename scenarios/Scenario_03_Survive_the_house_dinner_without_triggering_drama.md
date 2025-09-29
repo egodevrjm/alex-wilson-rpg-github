@@ -67,7 +67,7 @@
 **Starting Stats:**
 
 - **Cash:** $437 | **Bank:** $2,800  
-- **Guitars:** 1959 Martin D-28 \+ 1974 Gibson J-45  
+- **Guitars:** 1959 Martin D-28
 - **Vehicle:** 2001 Ford Ranger (146k miles)  
 - **Socials:** None (flip phone only)
 

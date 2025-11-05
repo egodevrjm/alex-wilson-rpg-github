@@ -1,0 +1,281 @@
+{
+  "session_info": {
+    "session_id": "session_001",
+    "session_name": "Breaking Through",
+    "created": "2025-03-14T10:00:00Z",
+    "last_updated": "2025-03-14T14:30:00Z",
+    "scene_count": 5
+  },
+  "character": {
+    "name": "Alex Wilson",
+    "middle_name": "Boone",
+    "age": 22,
+    "mode": "solo"
+  },
+  "current_state": {
+    "location": {
+      "specific": "Alex's Apartment, East Nashville",
+      "neighborhood": "East Nashville",
+      "city": "Nashville",
+      "state": "Tennessee"
+    },
+    "datetime": {
+      "day_of_week": "Tuesday",
+      "date": "2025-03-14",
+      "time": "14:30",
+      "timezone": "CST"
+    },
+    "financial": {
+      "cash": 23,
+      "bank": -47,
+      "last_updated": "2025-03-14T14:30:00Z",
+      "notes": "Overdraft from rent check bounce"
+    },
+    "vitals": {
+      "energy": 5,
+      "energy_max": 10,
+      "hunger": 7,
+      "hunger_max": 10,
+      "notes": "Skipped lunch, been up since 6am"
+    },
+    "equipment": {
+      "guitar": {
+        "name": "Betty",
+        "status": "Fifth string buzzing, needs new strings",
+        "condition": 7
+      },
+      "vehicle": {
+        "model": "F-150",
+        "status": "Quarter tank, check engine light on",
+        "condition": 6,
+        "notes": "Tommy says probably just a sensor"
+      },
+      "phone": {
+        "battery": 45,
+        "status": "working"
+      }
+    },
+    "social_media": {
+      "x": {
+        "followers": 8247,
+        "delta_this_scene": 3,
+        "delta_this_session": 12
+      },
+      "instagram": {
+        "followers": 12340,
+        "delta_this_scene": 0,
+        "delta_this_session": -5
+      },
+      "tiktok": {
+        "followers": 31892,
+        "delta_this_scene": 47,
+        "delta_this_session": 1203
+      },
+      "youtube": {
+        "followers": 2156,
+        "delta_this_scene": 1,
+        "delta_this_session": 8
+      },
+      "notes": "Recent TikTok video about Broadway life got some traction"
+    }
+  },
+  "dynamics": {
+    "current": [
+      {
+        "type": "Financial Pressure",
+        "description": "Rent due in 5 days ($850), currently $870 short",
+        "level": 9,
+        "active": true
+      },
+      {
+        "type": "Energy State",
+        "description": "Exhausted from construction gig, skipped meals",
+        "level": 5,
+        "active": true
+      },
+      {
+        "type": "Recent Loss",
+        "description": "Gig cancelled last minute when venue closed",
+        "level": 6,
+        "active": true
+      }
+    ],
+    "available": [
+      "Beauty Impact",
+      "Tommy's Status",
+      "Chaos Tendency",
+      "Recent Win",
+      "Social Media Moment",
+      "Equipment Issue",
+      "Relationship Status",
+      "Creative Flow"
+    ]
+  },
+  "consequences": {
+    "active": [
+      {
+        "id": "cons_001",
+        "description": "Bounced rent check - landlord is not happy",
+        "created": "2025-03-10",
+        "severity": 8,
+        "type": "financial",
+        "status": "active",
+        "manifestations": [
+          {
+            "scene": 1,
+            "effect": "Received angry text from landlord"
+          },
+          {
+            "scene": 3,
+            "effect": "Landlord threatening eviction proceedings"
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "id": "cons_002",
+        "description": "Impressed bartender at Robert's (Jenny) last week",
+        "created": "2025-03-08",
+        "severity": 3,
+        "type": "social",
+        "status": "active",
+        "manifestations": [
+          {
+            "scene": 2,
+            "effect": "Jenny gave free drink and extra attention"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "resolved": [],
+    "pending": [
+      {
+        "id": "cons_003",
+        "description": "TikTok video about Broadway struggles starting to go viral",
+        "trigger": "time_or_scene",
+        "estimated_trigger": "2-3 scenes",
+        "potential_effect": "Media attention, follower spike, possible opportunities"
+      }
+    ]
+  },
+  "relationships": {
+    "npcs": [
+      {
+        "name": "Tommy Crawford",
+        "relationship": "Best friend since age 5",
+        "status": "Currently in Nashville",
+        "last_interaction": "2025-03-14T08:00:00Z",
+        "notes": "Helped Alex get the construction gig, dealing with his own hangover",
+        "trust_level": 10,
+        "importance": "critical"
+      },
+      {
+        "name": "Jenny (bartender at Robert's)",
+        "relationship": "Friendly acquaintance",
+        "status": "Interested in Alex",
+        "last_interaction": "2025-03-08T22:30:00Z",
+        "notes": "Gave Alex free drinks, flirty behavior, remembers his name",
+        "trust_level": 5,
+        "importance": "minor"
+      }
+    ]
+  },
+  "storylines": {
+    "active": [
+      {
+        "id": "story_001",
+        "name": "Financial Crisis",
+        "description": "Alex is $870 short on rent with 5 days to come up with money",
+        "priority": "critical",
+        "started": "2025-03-10",
+        "threads": [
+          "Need to find gigs or work",
+          "Landlord threatening eviction",
+          "Can't afford guitar maintenance"
+        ]
+      },
+      {
+        "id": "story_002",
+        "name": "Viral Moment Building",
+        "description": "TikTok video about Broadway life gaining traction",
+        "priority": "medium",
+        "started": "2025-03-12",
+        "threads": [
+          "Follower count growing",
+          "Comments showing industry people watching",
+          "Opportunity for attention"
+        ]
+      }
+    ],
+    "background": [
+      {
+        "id": "story_003",
+        "name": "Rosie Walker Mystery",
+        "description": "Alex's grandmother's music legacy",
+        "priority": "low",
+        "started": null,
+        "threads": [
+          "Hasn't fully explored her history",
+          "Documentary coming out soon",
+          "Family secrets potentially revealed"
+        ],
+        "notes": "Background thread, can activate anytime"
+      }
+    ]
+  },
+  "world_state": {
+    "nashville": {
+      "season": "early_spring",
+      "weather": "mild, occasional rain",
+      "tourism_level": "medium",
+      "music_scene_activity": "active",
+      "notes": "CMA Fest planning starting, Broadway busy on weekends"
+    },
+    "pike_county": {
+      "season": "early_spring",
+      "notes": "Alex hasn't visited in 3 months"
+    }
+  },
+  "scene_history": [
+    {
+      "scene_number": 1,
+      "title": "Broke and Desperate",
+      "location": "Alex's Apartment",
+      "datetime": "2025-03-14T14:30:00Z",
+      "summary": "Alex discovers he's $870 short for rent, receives text about possible work in Pike County",
+      "choices_made": [
+        "Checked unknown number text",
+        "Called Tommy for advice"
+      ],
+      "consequences_created": [
+        "cons_004: Committed to Pike County gig"
+      ],
+      "stats_changed": {
+        "hunger": "+2",
+        "stress": "+1"
+      }
+    }
+  ],
+  "metadata": {
+    "director_notes": "Focusing on financial pressure and survival. Exploring what happens when Alex has to go back to Pike County for work.",
+    "tone_preference": "prestige_realism",
+    "pacing": "medium",
+    "themes": [
+      "class_struggle",
+      "survival",
+      "pride_vs_necessity"
+    ]
+  },
+  "technical": {
+    "context_files_loaded": [
+      "ALEX WILSON — CORE BIBLE (use).md",
+      "Alex Wilson - The Cheat Sheet (use).md",
+      "Nashville_Day_Jobs.md",
+      "Financial_Banking_Debt.md",
+      "Pike_County_Businesses.md"
+    ],
+    "version": "1.0",
+    "engine": "claude-sonnet-4-5-20250929"
+  }
+}

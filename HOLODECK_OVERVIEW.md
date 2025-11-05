@@ -18,7 +18,13 @@ Together, you create emergent stories about Alex Wilson's journey through Nashvi
 
 ## Quick Start
 
-**Want to jump right in?**
+**Want the visual interface?**
+
+1. Open → `holodeck/ui/index.html` in your browser
+2. Use the immersive web UI with state tracking, song input, and command helpers
+3. Read → `holodeck/UI_GUIDE.md` for UI quick reference
+
+**Want text-only?**
 
 1. Read → `holodeck/QUICKSTART.md` (5 minutes)
 2. Configure Claude → `holodeck/GETTING_STARTED_WITH_CLAUDE.md` (10 minutes)
@@ -27,6 +33,34 @@ Together, you create emergent stories about Alex Wilson's journey through Nashvi
 **Want to understand the system first?**
 
 Start with `holodeck/HOLODECK_README.md` for the complete overview.
+
+---
+
+## Interface Options
+
+### Web UI (Recommended)
+
+**Full immersive interface** with visual state tracking, song input system, and command helpers.
+
+- **Real-time state display** - See all stats, money, energy, social media
+- **Song input modal** - Add songs with title, lyrics, and performance notes
+- **Quick actions** - One-click command buttons
+- **Session management** - Save and load complete sessions
+- **Holodeck aesthetic** - Dark theme, futuristic design
+- **Auto-save** - State persists across browser sessions
+
+Open `holodeck/ui/index.html` and start playing immediately.
+
+### Text-Only Mode
+
+**Pure text interface** through Claude.ai, API, or Claude Code.
+
+- Copy/paste workflow
+- Manual state tracking
+- Full command support
+- Portable and flexible
+
+Both modes work perfectly - choose what fits your style.
 
 ---
 

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Wilson Holodeck - Interactive Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="holodeck-container">
+
+        <!-- Header -->
+        <header class="holodeck-header">
+            <div class="header-left">
+                <h1 class="holodeck-title">ALEX WILSON HOLODECK</h1>
+                <span class="status-indicator" id="connection-status">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Initializing...</span>
+                </span>
+            </div>
+            <div class="header-right">
+                <button class="header-btn" id="new-session-btn">New Session</button>
+                <button class="header-btn" id="save-state-btn">Save State</button>
+                <button class="header-btn" id="load-state-btn">Load State</button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+
+            <!-- Left Sidebar - State Display -->
+            <aside class="sidebar sidebar-left">
+                <div class="state-panel">
+                    <h2 class="panel-title">CURRENT STATE</h2>
+
+                    <!-- Character Info -->
+                    <div class="state-section">
+                        <h3>Character</h3>
+                        <div class="state-item">
+                            <span class="label">Name:</span>
+                            <span class="value" id="char-name">Alex Wilson</span>
+                        </div>
+                        <div class="state-item">
+                            <span class="label">Age:</span>
+                            <span class="value" id="char-age">22</span>
+                        </div>
+                        <div class="state-item">
+                            <span class="label">Mode:</span>
+                            <span class="value" id="char-mode">Solo</span>
+                        </div>
+                    </div>
+
+                    <!-- Location & Time -->
+                    <div class="state-section">
+                        <h3>Location & Time</h3>
+                        <div class="state-item">
+                            <span class="label">Location:</span>
+                            <span class="value" id="location">Unknown</span>
+                        </div>
+                        <div class="state-item">
+                            <span class="label">Date:</span>
+                            <span class="value" id="datetime">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Financial -->
+                    <div class="state-section">
+                        <h3>💰 Financial</h3>
+                        <div class="state-item">
+                            <span class="label">Cash:</span>
+                            <span class="value money" id="cash">$0</span>
+                        </div>
+                        <div class="state-item">
+                            <span class="label">Bank:</span>
+                            <span class="value money" id="bank">$0</span>
+                        </div>
+                        <div class="state-item">
+                            <span class="label">Total:</span>
+                            <span class="value money" id="total-money">$0</span>
+                        </div>
+                    </div>
+
+                    <!-- Vitals -->
+                    <div class="state-section">
+                        <h3>⚡ Vitals</h3>
+                        <div class="vital-bar">
+                            <div class="vital-label">
+                                <span>Energy</span>
+                                <span id="energy-value">7/10</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill energy" id="energy-bar" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div class="vital-bar">
+                            <div class="vital-label">
+                                <span>Hunger</span>
+                                <span id="hunger-value">5/10</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill hunger" id="hunger-bar" style="width: 50%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Equipment -->
+                    <div class="state-section">
+                        <h3>🎸 Equipment</h3>
+                        <div class="state-item">
+                            <span class="label">Guitar:</span>
+                            <span class="value" id="guitar-status">Betty (Good)</span>
+                        </div>
+                        <div class="state-item">
+                            <span class="label">Vehicle:</span>
+                            <span class="value" id="vehicle-status">F-150 (Running)</span>
+                        </div>
+                        <div class="state-item">
+                            <span class="label">Phone:</span>
+                            <span class="value" id="phone-battery">100%</span>
+                        </div>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="state-section">
+                        <h3>📣 Social Media</h3>
+                        <div class="social-item">
+                            <span class="platform">X:</span>
+                            <span class="followers" id="x-followers">8,000</span>
+                            <span class="delta" id="x-delta">+0</span>
+                        </div>
+                        <div class="social-item">
+                            <span class="platform">Instagram:</span>
+                            <span class="followers" id="ig-followers">12,000</span>
+                            <span class="delta" id="ig-delta">+0</span>
+                        </div>
+                        <div class="social-item">
+                            <span class="platform">TikTok:</span>
+                            <span class="followers" id="tt-followers">30,000</span>
+                            <span class="delta" id="tt-delta">+0</span>
+                        </div>
+                        <div class="social-item">
+                            <span class="platform">YouTube:</span>
+                            <span class="followers" id="yt-followers">2,000</span>
+                            <span class="delta" id="yt-delta">+0</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="state-section">
+                        <h3>Quick Stats</h3>
+                        <div class="state-item">
+                            <span class="label">Scene Count:</span>
+                            <span class="value" id="scene-count">0</span>
+                        </div>
+                        <div class="state-item">
+                            <span class="label">Active Consequences:</span>
+                            <span class="value" id="consequence-count">0</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Center - Scene Display -->
+            <main class="scene-display">
+                <div class="scene-container" id="scene-container">
+                    <div class="welcome-screen">
+                        <h2>Welcome to Alex Wilson Holodeck</h2>
+                        <p>Your text-based holodeck powered by Claude AI.</p>
+                        <p>Start by entering a scene setup in the Director Input below, or use Quick Actions to begin.</p>
+                        <div class="quick-start-examples">
+                            <h3>Example Starting Scenes:</h3>
+                            <button class="example-btn" data-scene="SCENE: Alex is broke in Nashville, it's rent day, and he's $850 short. He's sitting in his apartment trying to figure out options. Age 22, solo mode.">
+                                💸 Broke and Desperate
+                            </button>
+                            <button class="example-btn" data-scene="SCENE: Alex is playing a Friday night set at Robert's Western World. The crowd is rowdy, and the place is packed. Age 22, with Tommy.">
+                                🎸 Broadway Gig
+                            </button>
+                            <button class="example-btn" data-scene="SCENE: Alex has a meeting with an A&R rep from Big Loud Records at Barista Parlor. She saw him play last week and wants to talk. Age 22, solo mode.">
+                                🎤 Industry Meeting
+                            </button>
+                            <button class="example-btn" data-scene="SCENE: Alex is driving back to Pike County for the first time in 6 months. He needs money and took a gig there. It's complicated. Age 22, solo mode.">
+                                🏠 Homecoming
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right Sidebar - Tools -->
+            <aside class="sidebar sidebar-right">
+                <!-- Quick Actions -->
+                <div class="tool-panel">
+                    <h2 class="panel-title">QUICK ACTIONS</h2>
+                    <div class="quick-actions">
+                        <button class="action-btn" data-command="PAUSE: ">
+                            <span class="icon">⏸️</span>
+                            <span>Pause / Discuss</span>
+                        </button>
+                        <button class="action-btn" data-command="CHECK: ">
+                            <span class="icon">🔍</span>
+                            <span>Check State</span>
+                        </button>
+                        <button class="action-btn" data-command="INVENTORY">
+                            <span class="icon">📋</span>
+                            <span>Full Inventory</span>
+                        </button>
+                        <button class="action-btn" data-command="JUMP: ">
+                            <span class="icon">⏭️</span>
+                            <span>Jump Time</span>
+                        </button>
+                        <button class="action-btn" data-command="REWIND: ">
+                            <span class="icon">⏮️</span>
+                            <span>Rewind</span>
+                        </button>
+                        <button class="action-btn" id="song-btn">
+                            <span class="icon">🎵</span>
+                            <span>Add Song</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Command Reference -->
+                <div class="tool-panel">
+                    <h2 class="panel-title">COMMANDS</h2>
+                    <div class="command-ref">
+                        <div class="command-item">
+                            <code>SCENE:</code> <span>Create new scene</span>
+                        </div>
+                        <div class="command-item">
+                            <code>JUMP:</code> <span>Skip time forward/back</span>
+                        </div>
+                        <div class="command-item">
+                            <code>SET:</code> <span>Modify state</span>
+                        </div>
+                        <div class="command-item">
+                            <code>CHECK:</code> <span>Query state</span>
+                        </div>
+                        <div class="command-item">
+                            <code>PAUSE:</code> <span>Meta discussion</span>
+                        </div>
+                        <div class="command-item">
+                            <code>REWIND:</code> <span>Try different choice</span>
+                        </div>
+                        <div class="command-item">
+                            <code>INVENTORY</code> <span>Full state report</span>
+                        </div>
+                        <div class="command-item">
+                            <code>INTRODUCE:</code> <span>Add element</span>
+                        </div>
+                        <div class="command-item">
+                            <code>FOCUS:</code> <span>Direct attention</span>
+                        </div>
+                        <div class="command-item">
+                            <code>TONE:</code> <span>Set emotional tone</span>
+                        </div>
+                        <div class="command-item">
+                            <code>TEMPO:</code> <span>Control pacing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Consequences -->
+                <div class="tool-panel">
+                    <h2 class="panel-title">CONSEQUENCES</h2>
+                    <div class="consequences-list" id="consequences-list">
+                        <p class="empty-state">No active consequences</p>
+                    </div>
+                </div>
+
+                <!-- Session Log -->
+                <div class="tool-panel">
+                    <h2 class="panel-title">SESSION LOG</h2>
+                    <div class="session-log" id="session-log">
+                        <div class="log-entry">
+                            <span class="log-time">00:00:00</span>
+                            <span class="log-text">Session initialized</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Director Input Area -->
+        <footer class="director-input">
+            <div class="input-container">
+                <div class="input-header">
+                    <span class="input-label">DIRECTOR INPUT</span>
+                    <div class="input-controls">
+                        <button class="control-btn" id="clear-input-btn" title="Clear input">🗑️</button>
+                        <button class="control-btn" id="help-btn" title="Show help">❓</button>
+                    </div>
+                </div>
+                <textarea
+                    id="director-input"
+                    class="director-textarea"
+                    placeholder="Enter your scene setup, command, or natural language direction here...
+
+Examples:
+• SCENE: Alex is broke in Nashville...
+• Alex calls Tommy for help
+• JUMP: 3 days later
+• PAUSE: What are Alex's realistic options here?"
+                    rows="4"
+                ></textarea>
+                <div class="input-footer">
+                    <div class="input-hints" id="input-hints"></div>
+                    <button class="send-btn" id="send-btn">
+                        <span>Send to World Engine</span>
+                        <span class="shortcut">Ctrl+Enter</span>
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Song Modal -->
+    <div class="modal" id="song-modal">
+        <div class="modal-content song-modal-content">
+            <div class="modal-header">
+                <h2>Add Song Performance</h2>
+                <button class="modal-close" id="close-song-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="song-form">
+                    <div class="form-group">
+                        <label for="song-title">Song Title *</label>
+                        <input type="text" id="song-title" class="form-input" required placeholder="e.g., Dirt Road Destiny">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="song-lyrics">Lyrics *</label>
+                        <textarea id="song-lyrics" class="form-textarea" rows="12" required placeholder="Enter the full lyrics here...
+
+Verse 1:
+[lyrics]
+
+Chorus:
+[lyrics]
+
+etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="song-notes">Performance / Production Notes *</label>
+                        <textarea id="song-notes" class="form-textarea" rows="6" required placeholder="How should this song be heard? How should people react?
+
+Examples:
+• Raw acoustic, vulnerable delivery
+• Upbeat honky-tonk energy, crowd-pleaser
+• Stripped down, emotional, quiet room
+• High-energy, driving beat, gets people dancing
+• Intimate confessional, makes people lean in
+• Anthemic, fists-in-the-air moment"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="song-context">Context (Optional)</label>
+                        <input type="text" id="song-context" class="form-input" placeholder="When/where was this written? Any backstory?">
+                    </div>
+
+                    <div class="form-footer">
+                        <div class="copyright-notice">
+                            ✓ This song is copyright-free and available for reuse in game
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" id="cancel-song-btn">Cancel</button>
+                            <button type="submit" class="btn-primary">Add to Scene</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settings-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Session Settings</h2>
+                <button class="modal-close" id="close-settings-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="api-key">Claude API Key (Optional)</label>
+                    <input type="password" id="api-key" class="form-input" placeholder="sk-ant-...">
+                    <small>Leave blank if using copy/paste mode</small>
+                </div>
+                <div class="form-group">
+                    <label for="session-name">Session Name</label>
+                    <input type="text" id="session-name" class="form-input" placeholder="My Alex Wilson Story">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="auto-parse-state"> Auto-parse state from responses
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="show-timestamps"> Show timestamps in log
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal" id="help-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Quick Help</h2>
+                <button class="modal-close" id="close-help-modal">&times;</button>
+            </div>
+            <div class="modal-body help-content">
+                <h3>How to Use</h3>
+                <p>You are the <strong>Director</strong>. Claude is the <strong>World Engine</strong>.</p>
+
+                <h3>Getting Started</h3>
+                <ol>
+                    <li>Click a quick-start example or enter your own scene setup</li>
+                    <li>Copy the input and paste it into Claude (Claude.ai or API)</li>
+                    <li>Copy Claude's response and paste it into the scene display area</li>
+                    <li>Respond naturally or use commands to direct the story</li>
+                </ol>
+
+                <h3>Commands</h3>
+                <ul>
+                    <li><code>SCENE:</code> - Set up a new scene</li>
+                    <li><code>JUMP:</code> - Skip forward or backward in time</li>
+                    <li><code>PAUSE:</code> - Discuss with Claude out of character</li>
+                    <li><code>CHECK:</code> - Query specific state information</li>
+                    <li><code>INVENTORY</code> - Get complete state report</li>
+                </ul>
+
+                <h3>Adding Songs</h3>
+                <p>Click the 🎵 Song button to add a song performance. Include:</p>
+                <ul>
+                    <li><strong>Title</strong> - The song name</li>
+                    <li><strong>Lyrics</strong> - Full lyrics</li>
+                    <li><strong>Performance Notes</strong> - How it should be heard/reacted to</li>
+                </ul>
+                <p>All songs are copyright-free and can be reused throughout the game.</p>
+
+                <h3>Keyboard Shortcuts</h3>
+                <ul>
+                    <li><kbd>Ctrl + Enter</kbd> - Send input</li>
+                    <li><kbd>Ctrl + K</kbd> - Clear input</li>
+                    <li><kbd>Ctrl + /</kbd> - Show help</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

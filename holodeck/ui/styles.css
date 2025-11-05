@@ -648,6 +648,87 @@ code {
     border-radius: 4px;
 }
 
+.send-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.send-btn.processing {
+    opacity: 0.7;
+    animation: pulse-btn 1.5s infinite;
+}
+
+@keyframes pulse-btn {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+/* Stop Button */
+.stop-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--accent-red);
+    border: none;
+    color: white;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.stop-btn:hover {
+    background: #ff1a1a;
+    transform: translateY(-2px);
+}
+
+.stop-btn .shortcut {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+/* Streaming/Typing Indicator */
+.typing-indicator {
+    display: inline-block;
+    animation: blink 1s step-start infinite;
+    color: var(--accent-cyan);
+    font-weight: bold;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.scene-entry.streaming {
+    border-left-color: var(--accent-orange);
+}
+
+.scene-entry.streaming .scene-header {
+    color: var(--accent-orange);
+}
+
+/* Notification Styles */
+.input-hints.error {
+    color: var(--accent-red);
+}
+
+.input-hints.success {
+    color: var(--accent-green);
+}
+
 /* Modals */
 .modal {
     display: none;
@@ -743,8 +824,57 @@ code {
     font-size: 0.875rem;
 }
 
+.form-group small {
+    display: block;
+    margin-top: var(--spacing-xs);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.form-group small a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+}
+
+.form-group small a:hover {
+    text-decoration: underline;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.settings-notice {
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-left: 3px solid var(--accent-blue);
+    border-radius: 4px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.settings-notice strong {
+    display: block;
+    color: var(--accent-blue);
+    margin-bottom: var(--spacing-xs);
+}
+
+.settings-notice p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
 .form-input,
-.form-textarea {
+.form-textarea,
+select.form-input {
     width: 100%;
     padding: var(--spacing-sm) var(--spacing-md);
     background: var(--bg-tertiary);
@@ -757,9 +887,19 @@ code {
 }
 
 .form-input:focus,
-.form-textarea:focus {
+.form-textarea:focus,
+select.form-input:focus {
     outline: none;
     border-color: var(--accent-blue);
+}
+
+select.form-input {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300d4ff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-md) center;
+    padding-right: calc(var(--spacing-md) * 3);
 }
 
 .form-textarea {

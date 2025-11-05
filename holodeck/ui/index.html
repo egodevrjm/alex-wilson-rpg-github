@@ -23,6 +23,7 @@
                 </span>
             </div>
             <div class="header-right">
+                <button class="header-btn" id="settings-btn">⚙️ Settings</button>
                 <button class="header-btn" id="new-session-btn">New Session</button>
                 <button class="header-btn" id="save-state-btn">Save State</button>
                 <button class="header-btn" id="load-state-btn">Load State</button>
@@ -308,10 +309,16 @@ Examples:
                 ></textarea>
                 <div class="input-footer">
                     <div class="input-hints" id="input-hints"></div>
-                    <button class="send-btn" id="send-btn">
-                        <span>Send to World Engine</span>
-                        <span class="shortcut">Ctrl+Enter</span>
-                    </button>
+                    <div class="button-group">
+                        <button class="stop-btn" id="stop-btn" style="display: none;">
+                            <span>⏹ Stop</span>
+                            <span class="shortcut">Esc</span>
+                        </button>
+                        <button class="send-btn" id="send-btn">
+                            <span>Send to Claude</span>
+                            <span class="shortcut">Ctrl+Enter</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -380,28 +387,54 @@ Examples:
     <div class="modal" id="settings-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Session Settings</h2>
+                <h2>Settings</h2>
                 <button class="modal-close" id="close-settings-modal">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="api-key">Claude API Key (Optional)</label>
-                    <input type="password" id="api-key" class="form-input" placeholder="sk-ant-...">
-                    <small>Leave blank if using copy/paste mode</small>
+                <div class="settings-notice">
+                    <strong>🔌 Fully Integrated Mode</strong>
+                    <p>Connect directly to Claude API for real-time conversations. Your API key is stored locally in your browser.</p>
                 </div>
+
+                <div class="form-group">
+                    <label for="api-key">Claude API Key *</label>
+                    <input type="password" id="api-key" class="form-input" placeholder="sk-ant-...">
+                    <small>Get your API key from <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="model-select">Model</label>
+                    <select id="model-select" class="form-input">
+                        <option value="claude-sonnet-4-20250514">Claude 4.0 Sonnet (Latest)</option>
+                        <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet</option>
+                        <option value="claude-3-opus-20240229">Claude 3 Opus</option>
+                    </select>
+                    <small>Sonnet 4.0 recommended for best results</small>
+                </div>
+
                 <div class="form-group">
                     <label for="session-name">Session Name</label>
                     <input type="text" id="session-name" class="form-input" placeholder="My Alex Wilson Story">
                 </div>
-                <div class="form-group">
+
+                <div class="form-group checkbox-group">
                     <label>
-                        <input type="checkbox" id="auto-parse-state"> Auto-parse state from responses
+                        <input type="checkbox" id="auto-parse-state" checked>
+                        <span>Auto-parse state from Claude responses</span>
                     </label>
+                    <small>Automatically update stats from Claude's headers</small>
                 </div>
-                <div class="form-group">
+
+                <div class="form-group checkbox-group">
                     <label>
-                        <input type="checkbox" id="show-timestamps"> Show timestamps in log
+                        <input type="checkbox" id="enable-streaming" checked>
+                        <span>Enable streaming responses</span>
                     </label>
+                    <small>See Claude's response as it's generated (recommended)</small>
+                </div>
+
+                <div class="form-footer">
+                    <button type="button" class="btn-primary" id="save-settings-btn">Save Settings</button>
                 </div>
             </div>
         </div>
@@ -415,16 +448,28 @@ Examples:
                 <button class="modal-close" id="close-help-modal">&times;</button>
             </div>
             <div class="modal-body help-content">
-                <h3>How to Use</h3>
-                <p>You are the <strong>Director</strong>. Claude is the <strong>World Engine</strong>.</p>
+                <h3>🔌 Fully Integrated App</h3>
+                <p>You are the <strong>Director</strong>. Claude AI is the <strong>World Engine</strong>. This app connects directly to Claude's API for real-time conversations.</p>
 
                 <h3>Getting Started</h3>
                 <ol>
-                    <li>Click a quick-start example or enter your own scene setup</li>
-                    <li>Copy the input and paste it into Claude (Claude.ai or API)</li>
-                    <li>Copy Claude's response and paste it into the scene display area</li>
-                    <li>Respond naturally or use commands to direct the story</li>
+                    <li>Click <strong>⚙️ Settings</strong> and enter your Claude API key</li>
+                    <li>Choose a model (Sonnet 4.0 recommended)</li>
+                    <li>Click a quick-start example or type your own scene setup</li>
+                    <li>Click <strong>Send to Claude</strong> (or press <kbd>Ctrl+Enter</kbd>)</li>
+                    <li>Watch Claude's response appear in real-time</li>
+                    <li>Continue naturally - your conversation history is maintained</li>
                 </ol>
+
+                <h3>Features</h3>
+                <ul>
+                    <li><strong>Real-time Integration</strong> - Direct connection to Claude API</li>
+                    <li><strong>Streaming Responses</strong> - See Claude's response as it's generated</li>
+                    <li><strong>Auto State Parsing</strong> - Stats update automatically from Claude's headers</li>
+                    <li><strong>Conversation History</strong> - Full context maintained throughout session</li>
+                    <li><strong>Song Input System</strong> - Add songs with performance notes</li>
+                    <li><strong>Session Management</strong> - Save and load complete sessions</li>
+                </ul>
 
                 <h3>Commands</h3>
                 <ul>
@@ -433,6 +478,8 @@ Examples:
                     <li><code>PAUSE:</code> - Discuss with Claude out of character</li>
                     <li><code>CHECK:</code> - Query specific state information</li>
                     <li><code>INVENTORY</code> - Get complete state report</li>
+                    <li><code>SET:</code> - Manually update state values</li>
+                    <li><code>REWIND:</code> - Try a different choice</li>
                 </ul>
 
                 <h3>Adding Songs</h3>
@@ -440,16 +487,22 @@ Examples:
                 <ul>
                     <li><strong>Title</strong> - The song name</li>
                     <li><strong>Lyrics</strong> - Full lyrics</li>
-                    <li><strong>Performance Notes</strong> - How it should be heard/reacted to</li>
+                    <li><strong>Performance Notes</strong> - How it should be heard and how people react</li>
                 </ul>
-                <p>All songs are copyright-free and can be reused throughout the game.</p>
+                <p>Performance notes are crucial - they guide Claude on the emotional impact and crowd reactions.</p>
+                <p>All songs are copyright-free and reusable throughout the game.</p>
 
                 <h3>Keyboard Shortcuts</h3>
                 <ul>
-                    <li><kbd>Ctrl + Enter</kbd> - Send input</li>
+                    <li><kbd>Ctrl + Enter</kbd> - Send input to Claude</li>
+                    <li><kbd>Esc</kbd> - Stop generation (while Claude is responding)</li>
                     <li><kbd>Ctrl + K</kbd> - Clear input</li>
-                    <li><kbd>Ctrl + /</kbd> - Show help</li>
+                    <li><kbd>Ctrl + /</kbd> - Show this help</li>
                 </ul>
+
+                <h3>API Key</h3>
+                <p>Your Claude API key is required for integrated mode. Get one at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
+                <p>Your API key is stored locally in your browser and never sent anywhere except directly to Claude's API.</p>
             </div>
         </div>
     </div>

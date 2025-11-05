@@ -1,5 +1,6 @@
 // ==============================================
-// ALEX WILSON HOLODECK - APPLICATION LOGIC
+// ALEX WILSON HOLODECK - INTEGRATED WEB APP
+// Full Claude API Integration
 // ==============================================
 
 class HolodeckApp {
@@ -7,6 +8,10 @@ class HolodeckApp {
         this.state = this.loadState();
         this.songs = this.loadSongs();
         this.sessionStartTime = Date.now();
+        this.conversationHistory = [];
+        this.apiKey = this.loadApiKey();
+        this.isProcessing = false;
+        this.currentController = null;
         this.init();
     }
 
@@ -16,7 +21,13 @@ class HolodeckApp {
         this.attachEventListeners();
         this.updateUI();
         this.logEvent('Session initialized');
-        this.updateConnectionStatus('ready', 'Ready');
+
+        if (this.apiKey) {
+            this.updateConnectionStatus('ready', 'Connected to Claude');
+        } else {
+            this.updateConnectionStatus('error', 'API Key Required');
+            this.openSettingsModal();
+        }
     }
 
     // Bind DOM elements
@@ -25,6 +36,7 @@ class HolodeckApp {
         this.directorInput = document.getElementById('director-input');
         this.sendBtn = document.getElementById('send-btn');
         this.clearInputBtn = document.getElementById('clear-input-btn');
+        this.stopBtn = document.getElementById('stop-btn');
 
         // Scene display
         this.sceneContainer = document.getElementById('scene-container');
@@ -41,9 +53,18 @@ class HolodeckApp {
         this.songNotes = document.getElementById('song-notes');
         this.songContext = document.getElementById('song-context');
 
+        // Settings form
+        this.apiKeyInput = document.getElementById('api-key');
+        this.modelSelect = document.getElementById('model-select');
+        this.sessionNameInput = document.getElementById('session-name');
+        this.autoParseCheckbox = document.getElementById('auto-parse-state');
+        this.streamingCheckbox = document.getElementById('enable-streaming');
+        this.saveSettingsBtn = document.getElementById('save-settings-btn');
+
         // Buttons
         this.songBtn = document.getElementById('song-btn');
         this.helpBtn = document.getElementById('help-btn');
+        this.settingsBtn = document.getElementById('settings-btn');
         this.newSessionBtn = document.getElementById('new-session-btn');
         this.saveStateBtn = document.getElementById('save-state-btn');
         this.loadStateBtn = document.getElementById('load-state-btn');
@@ -91,6 +112,9 @@ class HolodeckApp {
             }
         });
 
+        // Stop generation
+        this.stopBtn.addEventListener('click', () => this.stopGeneration());
+
         // Clear input
         this.clearInputBtn.addEventListener('click', () => this.clearInput());
 
@@ -103,6 +127,11 @@ class HolodeckApp {
         // Help modal
         this.helpBtn.addEventListener('click', () => this.openHelpModal());
         document.getElementById('close-help-modal').addEventListener('click', () => this.closeHelpModal());
+
+        // Settings modal
+        this.settingsBtn.addEventListener('click', () => this.openSettingsModal());
+        document.getElementById('close-settings-modal').addEventListener('click', () => this.closeSettingsModal());
+        this.saveSettingsBtn.addEventListener('click', () => this.saveSettings());
 
         // Quick actions
         document.querySelectorAll('.action-btn[data-command]').forEach(btn => {
@@ -146,6 +175,9 @@ class HolodeckApp {
                 e.preventDefault();
                 this.openHelpModal();
             }
+            if (e.key === 'Escape' && this.isProcessing) {
+                this.stopGeneration();
+            }
         });
 
         // Auto-resize textarea
@@ -155,38 +187,321 @@ class HolodeckApp {
         });
     }
 
-    // Handle send input
-    handleSend() {
+    // Handle send input - INTEGRATED WITH CLAUDE API
+    async handleSend() {
+        if (this.isProcessing) return;
+
         const input = this.directorInput.value.trim();
         if (!input) return;
 
-        // Add to scene display
-        this.addSceneEntry('DIRECTOR INPUT', input);
+        if (!this.apiKey) {
+            this.showNotification('Please set your API key in settings', 'error');
+            this.openSettingsModal();
+            return;
+        }
 
-        // Copy to clipboard
-        this.copyToClipboard(input);
+        // Add to scene display
+        this.addSceneEntry('DIRECTOR', input);
 
         // Log event
-        this.logEvent(`Input sent: ${input.substring(0, 50)}...`);
+        this.logEvent(`Sending: ${input.substring(0, 50)}...`);
 
-        // Update state if it contains state changes
+        // Parse input for state changes (SET commands)
         this.parseInputForStateChanges(input);
 
         // Clear input
         this.clearInput();
 
-        // Show notification
-        this.showNotification('Input copied to clipboard. Paste into Claude.');
+        // Send to Claude
+        await this.sendToClaude(input);
     }
 
-    // Parse input for state changes (SET commands, etc.)
+    // Send to Claude API
+    async sendToClaude(userInput) {
+        this.isProcessing = true;
+        this.updateConnectionStatus('busy', 'Claude is thinking...');
+        this.showProcessingState(true);
+
+        // Add to conversation history
+        this.conversationHistory.push({
+            role: 'user',
+            content: userInput
+        });
+
+        try {
+            const response = await this.callClaudeAPI(this.conversationHistory);
+
+            if (response) {
+                // Add to conversation history
+                this.conversationHistory.push({
+                    role: 'assistant',
+                    content: response
+                });
+
+                // Display response
+                this.addSceneEntry('WORLD ENGINE', response);
+
+                // Parse response for state updates
+                if (this.autoParseCheckbox.checked) {
+                    this.parseClaudeResponse(response);
+                }
+
+                // Log success
+                this.logEvent('Response received');
+                this.updateConnectionStatus('ready', 'Connected to Claude');
+            }
+        } catch (error) {
+            console.error('Claude API error:', error);
+            this.logEvent(`Error: ${error.message}`);
+            this.showNotification(`Error: ${error.message}`, 'error');
+            this.updateConnectionStatus('error', 'Connection Error');
+        } finally {
+            this.isProcessing = false;
+            this.showProcessingState(false);
+        }
+    }
+
+    // Call Claude API
+    async callClaudeAPI(messages) {
+        const systemPrompt = this.buildSystemPrompt();
+        const streaming = this.streamingCheckbox.checked;
+
+        const requestBody = {
+            model: this.modelSelect.value,
+            max_tokens: 4096,
+            system: systemPrompt,
+            messages: messages
+        };
+
+        if (streaming) {
+            return await this.streamClaudeAPI(requestBody);
+        } else {
+            return await this.fetchClaudeAPI(requestBody);
+        }
+    }
+
+    // Standard fetch (non-streaming)
+    async fetchClaudeAPI(requestBody) {
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-api-key': this.apiKey,
+                'anthropic-version': '2023-06-01'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error?.message || 'API request failed');
+        }
+
+        const data = await response.json();
+        return data.content[0].text;
+    }
+
+    // Streaming fetch
+    async streamClaudeAPI(requestBody) {
+        requestBody.stream = true;
+
+        this.currentController = new AbortController();
+
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-api-key': this.apiKey,
+                'anthropic-version': '2023-06-01'
+            },
+            body: JSON.stringify(requestBody),
+            signal: this.currentController.signal
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error?.message || 'API request failed');
+        }
+
+        // Create scene entry for streaming
+        const streamEntry = this.createStreamingSceneEntry();
+
+        let fullResponse = '';
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+
+        try {
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value);
+                const lines = chunk.split('\n');
+
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const data = line.slice(6);
+                        if (data === '[DONE]') continue;
+
+                        try {
+                            const parsed = JSON.parse(data);
+
+                            if (parsed.type === 'content_block_delta') {
+                                const text = parsed.delta?.text || '';
+                                fullResponse += text;
+                                this.updateStreamingSceneEntry(streamEntry, fullResponse);
+                            }
+                        } catch (e) {
+                            // Skip invalid JSON
+                        }
+                    }
+                }
+            }
+        } catch (error) {
+            if (error.name === 'AbortError') {
+                this.logEvent('Generation stopped by user');
+                fullResponse += '\n\n[Generation stopped]';
+                this.updateStreamingSceneEntry(streamEntry, fullResponse);
+            } else {
+                throw error;
+            }
+        }
+
+        return fullResponse;
+    }
+
+    // Stop generation
+    stopGeneration() {
+        if (this.currentController) {
+            this.currentController.abort();
+            this.currentController = null;
+        }
+        this.isProcessing = false;
+        this.showProcessingState(false);
+        this.updateConnectionStatus('ready', 'Connected to Claude');
+    }
+
+    // Build system prompt
+    buildSystemPrompt() {
+        return `You are the World Engine for the Alex Wilson RPG Holodeck system.
+
+ROLE:
+- The user is the Director, setting scenes and making high-level choices
+- You are the Game Master and world-builder, bringing scenes to life
+- You play Alex Wilson and all NPCs based on established canon
+- You track all stats, consequences, and state precisely
+- You load relevant context for each scene
+
+CORE FILES (treat as loaded):
+- ALEX WILSON — CORE BIBLE (use).md
+- Alex Wilson - The Cheat Sheet (use).md
+- Master Index for context files
+
+PROTOCOL:
+- Respond to scene setups with full headers and rich narrative
+- Track money, energy, hunger, time, social media precisely
+- Maintain all consequences in a running ledger
+- Stay grounded in prestige realism, no sitcom beats
+- Character voices must match the Bible exactly
+- Use the mandatory header format for every scene
+
+MANDATORY HEADER FORMAT:
+—------—------—------
+📍 Location: [Specific place] | 📅 [Day], [Date], [Time] | Age: [age]
+💰 Cash: $[X] | Bank: $[X]
+🎸 Betty: [status] | 🚗 F-150: [status] | ⚡ Energy: [X/10] | 🍔 Hunger: [X/10]
+📣 Followers (X/IG/TikTok/YT): [#,#,#,#] | Δ Since Last: [+/-X each]
+CURRENT DYNAMICS (Choose 2-3 relevant):
+- [Dynamic 1]: [Description]
+- [Dynamic 2]: [Description]
+—------—------—------
+
+After the header, provide rich scene narrative with specific details, character behavior, and choice points.
+
+When the user provides songs (Title, Lyrics, Performance Notes), use the performance notes to guide how the song is heard and how people react.
+
+All songs shared are copyright-free and available for reuse in game.
+
+Current session state:
+${JSON.stringify(this.state.current_state, null, 2)}
+
+Ready to respond to Director input.`;
+    }
+
+    // Parse Claude response for state updates
+    parseClaudeResponse(response) {
+        // Extract header block
+        const headerMatch = response.match(/—------—------—------\n([\s\S]*?)\n—------—------—------/);
+        if (!headerMatch) return;
+
+        const header = headerMatch[1];
+
+        // Parse money
+        const cashMatch = header.match(/💰 Cash: \$(-?\d+)/);
+        if (cashMatch) {
+            this.state.current_state.financial.cash = parseInt(cashMatch[1]);
+        }
+
+        const bankMatch = header.match(/Bank: \$(-?\d+)/);
+        if (bankMatch) {
+            this.state.current_state.financial.bank = parseInt(bankMatch[1]);
+        }
+
+        // Parse vitals
+        const energyMatch = header.match(/⚡ Energy: (\d+)\/10/);
+        if (energyMatch) {
+            this.state.current_state.vitals.energy = parseInt(energyMatch[1]);
+        }
+
+        const hungerMatch = header.match(/🍔 Hunger: (\d+)\/10/);
+        if (hungerMatch) {
+            this.state.current_state.vitals.hunger = parseInt(hungerMatch[1]);
+        }
+
+        // Parse location
+        const locationMatch = header.match(/📍 Location: ([^|]+)/);
+        if (locationMatch) {
+            this.state.current_state.location.specific = locationMatch[1].trim();
+        }
+
+        // Parse date/time
+        const dateTimeMatch = header.match(/📅 ([^|]+)/);
+        if (dateTimeMatch) {
+            const dt = dateTimeMatch[1].trim();
+            this.state.current_state.datetime.datetime = dt;
+        }
+
+        // Parse social media
+        const followersMatch = header.match(/📣 Followers \(X\/IG\/TikTok\/YT\): ([\d,]+)\/([\d,]+)\/([\d,]+)\/([\d,]+)/);
+        if (followersMatch) {
+            this.state.current_state.social_media.x.followers = parseInt(followersMatch[1].replace(/,/g, ''));
+            this.state.current_state.social_media.instagram.followers = parseInt(followersMatch[2].replace(/,/g, ''));
+            this.state.current_state.social_media.tiktok.followers = parseInt(followersMatch[3].replace(/,/g, ''));
+            this.state.current_state.social_media.youtube.followers = parseInt(followersMatch[4].replace(/,/g, ''));
+        }
+
+        const deltaMatch = header.match(/Δ Since Last: ([+-]\d+)\/([+-]\d+)\/([+-]\d+)\/([+-]\d+)/);
+        if (deltaMatch) {
+            this.state.current_state.social_media.x.delta_this_scene = parseInt(deltaMatch[1]);
+            this.state.current_state.social_media.instagram.delta_this_scene = parseInt(deltaMatch[2]);
+            this.state.current_state.social_media.tiktok.delta_this_scene = parseInt(deltaMatch[3]);
+            this.state.current_state.social_media.youtube.delta_this_scene = parseInt(deltaMatch[4]);
+        }
+
+        // Update UI and save
+        this.updateUI();
+        this.saveState();
+        this.logEvent('State auto-updated from response');
+    }
+
+    // Parse input for state changes (SET commands)
     parseInputForStateChanges(input) {
         const setMatch = input.match(/SET:\s*(.+)/i);
         if (setMatch) {
             const change = setMatch[1];
 
             // Parse money changes
-            const cashMatch = change.match(/cash(?:\s+to)?\s*\$?(\d+)/i);
+            const cashMatch = change.match(/cash(?:\s+to)?\s*\$?(-?\d+)/i);
             if (cashMatch) {
                 this.state.current_state.financial.cash = parseInt(cashMatch[1]);
             }
@@ -245,6 +560,61 @@ class HolodeckApp {
         this.updateUI();
     }
 
+    // Create streaming scene entry
+    createStreamingSceneEntry() {
+        const entry = document.createElement('div');
+        entry.className = 'scene-entry streaming';
+
+        const header = document.createElement('div');
+        header.className = 'scene-header';
+        header.innerHTML = 'WORLD ENGINE <span class="typing-indicator">▋</span>';
+
+        const body = document.createElement('div');
+        body.className = 'scene-content';
+        body.textContent = '';
+
+        entry.appendChild(header);
+        entry.appendChild(body);
+
+        // Remove welcome screen if present
+        const welcome = this.sceneContainer.querySelector('.welcome-screen');
+        if (welcome) {
+            welcome.remove();
+        }
+
+        this.sceneContainer.appendChild(entry);
+
+        return entry;
+    }
+
+    // Update streaming scene entry
+    updateStreamingSceneEntry(entry, text) {
+        const body = entry.querySelector('.scene-content');
+        body.textContent = text;
+
+        // Scroll to bottom
+        this.sceneContainer.scrollTop = this.sceneContainer.scrollHeight;
+    }
+
+    // Show/hide processing state
+    showProcessingState(processing) {
+        this.sendBtn.disabled = processing;
+        this.stopBtn.style.display = processing ? 'flex' : 'none';
+        this.directorInput.disabled = processing;
+
+        if (processing) {
+            this.sendBtn.classList.add('processing');
+        } else {
+            this.sendBtn.classList.remove('processing');
+            const streamingEntries = document.querySelectorAll('.scene-entry.streaming');
+            streamingEntries.forEach(entry => {
+                entry.classList.remove('streaming');
+                const indicator = entry.querySelector('.typing-indicator');
+                if (indicator) indicator.remove();
+            });
+        }
+    }
+
     // Handle song submission
     handleSongSubmit(e) {
         e.preventDefault();
@@ -300,13 +670,37 @@ ${song.context ? `Context: ${song.context}` : ''}
 Alex performs this song.`;
     }
 
+    // Settings management
+    saveSettings() {
+        const apiKey = this.apiKeyInput.value.trim();
+        if (apiKey) {
+            this.apiKey = apiKey;
+            localStorage.setItem('holodeck_api_key', apiKey);
+            this.updateConnectionStatus('ready', 'Connected to Claude');
+        }
+
+        const sessionName = this.sessionNameInput.value.trim();
+        if (sessionName) {
+            this.state.session_info.session_name = sessionName;
+            this.saveState();
+        }
+
+        this.closeSettingsModal();
+        this.showNotification('Settings saved');
+        this.logEvent('Settings updated');
+    }
+
+    loadApiKey() {
+        return localStorage.getItem('holodeck_api_key') || '';
+    }
+
     // Update UI with current state
     updateUI() {
         const s = this.state.current_state;
 
         // Location & Time
         this.stateElements.location.textContent = s.location.specific;
-        this.stateElements.datetime.textContent = `${s.datetime.day_of_week}, ${s.datetime.date}, ${s.datetime.time}`;
+        this.stateElements.datetime.textContent = s.datetime.datetime || `${s.datetime.day_of_week}, ${s.datetime.date}, ${s.datetime.time}`;
 
         // Financial
         this.stateElements.cash.textContent = this.formatMoney(s.financial.cash);
@@ -339,6 +733,14 @@ Alex performs this song.`;
 
         // Consequences
         this.updateConsequencesList();
+
+        // Settings modal
+        if (this.apiKeyInput) {
+            this.apiKeyInput.value = this.apiKey;
+        }
+        if (this.sessionNameInput) {
+            this.sessionNameInput.value = this.state.session_info.session_name;
+        }
     }
 
     // Update social media display
@@ -429,23 +831,15 @@ Alex performs this song.`;
         return `${h}:${m}:${s}`;
     }
 
-    // Utility: Copy to clipboard
-    async copyToClipboard(text) {
-        try {
-            await navigator.clipboard.writeText(text);
-        } catch (err) {
-            console.error('Failed to copy:', err);
-        }
-    }
-
     // Utility: Show notification
-    showNotification(message) {
-        // Simple notification - could be enhanced
+    showNotification(message, type = 'info') {
         const inputHints = document.getElementById('input-hints');
         inputHints.textContent = message;
+        inputHints.className = `input-hints ${type}`;
         setTimeout(() => {
             inputHints.textContent = '';
-        }, 3000);
+            inputHints.className = 'input-hints';
+        }, 4000);
     }
 
     // Clear input
@@ -472,15 +866,25 @@ Alex performs this song.`;
         this.helpModal.classList.remove('active');
     }
 
+    openSettingsModal() {
+        this.settingsModal.classList.add('active');
+        this.updateUI();
+    }
+
+    closeSettingsModal() {
+        this.settingsModal.classList.remove('active');
+    }
+
     // New session
     newSession() {
-        if (confirm('Start a new session? Current session will be saved.')) {
+        if (confirm('Start a new session? Current conversation will be cleared.')) {
             this.saveState();
             this.state = this.createNewState();
+            this.conversationHistory = [];
             this.sceneContainer.innerHTML = `
                 <div class="welcome-screen">
                     <h2>New Session Started</h2>
-                    <p>Ready to begin your story.</p>
+                    <p>Connected to Claude AI. Ready to begin your story.</p>
                 </div>
             `;
             this.sessionStartTime = Date.now();
@@ -532,7 +936,8 @@ Alex performs this song.`;
                 datetime: {
                     day_of_week: new Date().toLocaleDateString('en-US', { weekday: 'long' }),
                     date: new Date().toISOString().split('T')[0],
-                    time: new Date().toTimeString().split(' ')[0].substring(0, 5)
+                    time: new Date().toTimeString().split(' ')[0].substring(0, 5),
+                    datetime: ''
                 },
                 financial: {
                     cash: 0,
@@ -605,7 +1010,7 @@ Alex performs this song.`;
                     this.showNotification('Session loaded successfully');
                 } catch (error) {
                     console.error('Failed to load state:', error);
-                    this.showNotification('Failed to load session file');
+                    this.showNotification('Failed to load session file', 'error');
                 }
             };
 
@@ -634,16 +1039,6 @@ Alex performs this song.`;
         } catch (e) {
             console.error('Failed to save songs:', e);
         }
-    }
-
-    getSongByTitle(title) {
-        return this.songs.find(s =>
-            s.title.toLowerCase() === title.toLowerCase()
-        );
-    }
-
-    getAllSongs() {
-        return this.songs;
     }
 }
 

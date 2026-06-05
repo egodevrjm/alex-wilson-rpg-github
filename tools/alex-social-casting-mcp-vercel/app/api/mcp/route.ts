@@ -31,6 +31,10 @@ function findRoom(roomId: string) {
   return rooms.find(room => room.id === roomId);
 }
 
+function shouldFilterMode(mode?: string) {
+  return Boolean(mode && mode !== 'all' && mode !== '*');
+}
+
 function isRealOrCanon(person: any) {
   return person.kind === 'public_candidate' || person.kind === 'canon_real' || person.kind === 'canon_fictional' || person.kind === 'role_placeholder';
 }
@@ -158,8 +162,8 @@ function castRoom(room: any, args: any) {
 
 const handler = createMcpHandler(
   (server: any) => {
-    server.tool('list_rooms', 'List configured social rooms.', { mode: z.string().optional() }, async ({ mode }: any) => {
-      return jsonText(rooms.filter(room => (mode ? room.mode === mode : true)));
+    server.tool('list_rooms', 'List configured social rooms. Use mode=all or omit mode to return every room.', { mode: z.string().optional() }, async ({ mode }: any) => {
+      return jsonText(rooms.filter(room => (shouldFilterMode(mode) ? room.mode === mode : true)));
     });
 
     server.tool('get_room_rules', 'Get rules for one room.', { roomId: z.string() }, async ({ roomId }: any) => {

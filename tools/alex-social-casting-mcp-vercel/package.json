@@ -1,0 +1,29 @@
+{
+  "name": "alex-social-casting-mcp-vercel-wrapper",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Vercel-deployable wrapper that unpacks the Alex Social Casting remote MCP at build time.",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/unpack.js && next dev",
+    "build": "node scripts/unpack.js && next build",
+    "start": "next start",
+    "typecheck": "node scripts/unpack.js && tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "mcp-handler": "^1.0.0",
+    "next": "^15.3.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "@types/react": "^19.0.12",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

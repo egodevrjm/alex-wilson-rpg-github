@@ -1,0 +1,54 @@
+[
+  {
+    "id": "summer_house",
+    "title": "Summer House",
+    "mode": "open_weather",
+    "scale": "hundreds deep; roughly 80-150 active seasonally",
+    "function": "Loose global young-famous European summer circuit: villas, boats, festivals, fashion weeks, airports, afterparties and seasonal collisions.",
+    "register": "Messy, mobile, horny, international, image-saturated, fast, half in airports, boats, fittings and beds.",
+    "source_policy": "Do not treat names as a roster. Use this file for room behaviour and the people database for dynamic casting.",
+    "casting_policy": {
+      "max_real_named_public_figures": 2,
+      "max_canon_seed_names": 1,
+      "prefer_fictional_background": true,
+      "avoid_recent_window": 2,
+      "default_slots": [
+        { "type": "musician", "min": 0, "max": 2 },
+        { "type": "actor", "min": 0, "max": 2 },
+        { "type": "model", "min": 1, "max": 3 },
+        { "type": "athlete", "min": 0, "max": 1 },
+        { "type": "fictional_background", "min": 3, "max": 8 }
+      ],
+      "forbidden": [
+        "Do not use Summer House as Alex's private group.",
+        "Do not repeatedly default to Brain Trust names.",
+        "Do not assert private claims about real public figures."
+      ]
+    },
+    "room_rules": [
+      "Open-weather room: cast by social function first, not by fixed membership.",
+      "Use 0-2 real named public figures per scene unless Ryan explicitly asks for more.",
+      "Prefer fictional or lightly sketched background voices to preserve scale.",
+      "Alex is one high-status regular, not the host or owner of the room.",
+      "Most visible traffic should already be moving before Alex appears."
+    ],
+    "source_refs": ["social_summer_house", "social_chat_system"]
+  },
+  {
+    "id": "brain_trust",
+    "title": "Brain Trust",
+    "mode": "closed",
+    "scale": "6 including Alex",
+    "function": "Alex's closest mutual intimate friend room.",
+    "register": "Fast, emotionally accurate, teasing, public-childhood shorthand.",
+    "source_policy": "Canon locked. Do not add members unless Ryan changes the canon.",
+    "casting_policy": {
+      "fixed_member_ids": ["alex_wilson", "apple_martin", "iris_law", "lila_moss", "kaia_gerber", "rocco_ritchie"]
+    },
+    "room_rules": [
+      "Closed room: return canon members only.",
+      "Not handlers, staff, strategists, siblings or an Alex-response unit."
+    ],
+    "source_refs": ["social_brain_trust"]
+  }
+]

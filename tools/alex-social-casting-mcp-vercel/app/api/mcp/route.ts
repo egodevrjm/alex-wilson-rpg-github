@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { createMcpHandler } from 'mcp-handler';
 import peopleData from '@/data/people.json';
+import phoenixPeopleData from '@/data/phoenix-people.json';
 import roomsData from '@/data/rooms.json';
 import sourcesData from '@/data/sources.json';
 
@@ -8,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 export const maxDuration = 60;
 
-const people = peopleData as any[];
+const people = [...(peopleData as any[]), ...(phoenixPeopleData as any[])];
 const rooms = roomsData as any[];
 const sources = sourcesData as any[];
 const usageLog: any[] = [];

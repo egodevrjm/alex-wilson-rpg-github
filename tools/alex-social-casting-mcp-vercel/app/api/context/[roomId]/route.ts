@@ -1,4 +1,5 @@
 import people from '@/data/people.json';
+import phoenixPeople from '@/data/phoenix-people.json';
 import rooms from '@/data/rooms.json';
 
 export const dynamic = 'force-dynamic';
@@ -12,7 +13,8 @@ export async function GET(_request: Request, { params }: Params) {
     return Response.json({ error: `Unknown room id: ${roomId}` }, { status: 404 });
   }
 
-  const eligible_people = (people as any[])
+  const allPeople = [...(people as any[]), ...(phoenixPeople as any[])];
+  const eligible_people = allPeople
     .filter(person => person.eligible_rooms?.includes(roomId))
     .map(person => ({
       id: person.id,

@@ -40,6 +40,48 @@
     "source_refs": ["social_summer_house", "social_chat_system"]
   },
   {
+    "id": "phoenix_hollow",
+    "title": "Phoenix Hollow",
+    "mode": "open_weather",
+    "scale": "150-300+ global cultural icons, godfamily elders, family friends, legends and selective adult children",
+    "function": "Rosie and Homer's global cultural-icon parent room: music, film, fashion, art, media, philanthropy, statesmanship and godfamily weather.",
+    "register": "Older, cultural, protective, dry, multilingual where natural, not easily impressed. Icon-parent register rather than working-shop talk.",
+    "source_policy": "Phoenix Hollow is real/canon-name dense. Fictional voices imply scale but do not carry the room unless Ryan asks for anonymous background traffic.",
+    "casting_policy": {
+      "default_total_visible": 25,
+      "target_real_named_people": 22,
+      "target_fictional_background": 3,
+      "max_real_named_public_figures": 22,
+      "max_canon_seed_names": 12,
+      "prefer_fictional_background": false,
+      "avoid_recent_window": 2,
+      "default_slots": [
+        { "type": "music_legend", "min": 6, "max": 10 },
+        { "type": "film_legend", "min": 3, "max": 6 },
+        { "type": "fashion_legend", "min": 3, "max": 6 },
+        { "type": "statesmanship", "min": 1, "max": 4 },
+        { "type": "parent_layer", "min": 3, "max": 8 },
+        { "type": "adult_child", "min": 0, "max": 3 },
+        { "type": "fictional_background", "min": 2, "max": 3 }
+      ],
+      "forbidden": [
+        "Do not write Phoenix Hollow as Alex's fan club.",
+        "Do not make it Music Elders; working-musician shop-talk belongs elsewhere.",
+        "Do not make it Dawson Family, Combined Family, or a household/staff chat.",
+        "Do not let fictional background voices dominate the visible cast.",
+        "Do not assert private claims about real public figures."
+      ]
+    },
+    "room_rules": [
+      "Phoenix Hollow is icon-dense: default visible cast should be roughly 22 real/canon/public legends plus 3 fictional/background voices.",
+      "Rosie and Homer provide room gravity; Alex is deeply known but not the default centre.",
+      "Use the icon-parent/godfamily/cultural-elder register, not recording-industry shop-talk.",
+      "Fictional background voices are only texture for scale.",
+      "Most visible traffic should live in the room's own cultural, family-friend, event, foundation, travel and memorial weather."
+    ],
+    "source_refs": ["social_phoenix_hollow", "social_chat_system"]
+  },
+  {
     "id": "brain_trust",
     "title": "Brain Trust",
     "mode": "closed",

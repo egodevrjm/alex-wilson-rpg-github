@@ -8,27 +8,32 @@
     "register": "Messy, mobile, horny, international, image-saturated, fast, half in airports, boats, fittings and beds.",
     "source_policy": "Do not treat names as a roster. Use this file for room behaviour and the people database for dynamic casting.",
     "casting_policy": {
-      "max_real_named_public_figures": 2,
-      "max_canon_seed_names": 1,
-      "prefer_fictional_background": true,
+      "default_total_visible": 15,
+      "target_real_named_people": 12,
+      "target_fictional_background": 3,
+      "max_real_named_public_figures": 12,
+      "max_canon_seed_names": 4,
+      "prefer_fictional_background": false,
       "avoid_recent_window": 2,
       "default_slots": [
-        { "type": "musician", "min": 0, "max": 2 },
-        { "type": "actor", "min": 0, "max": 2 },
-        { "type": "model", "min": 1, "max": 3 },
-        { "type": "athlete", "min": 0, "max": 1 },
-        { "type": "fictional_background", "min": 3, "max": 8 }
+        { "type": "musician", "min": 2, "max": 4 },
+        { "type": "actor", "min": 1, "max": 3 },
+        { "type": "model", "min": 3, "max": 5 },
+        { "type": "athlete", "min": 0, "max": 2 },
+        { "type": "legacy", "min": 1, "max": 3 },
+        { "type": "fictional_background", "min": 2, "max": 3 }
       ],
       "forbidden": [
         "Do not use Summer House as Alex's private group.",
         "Do not repeatedly default to Brain Trust names.",
+        "Do not let fictional background voices outnumber real/canon/public names.",
         "Do not assert private claims about real public figures."
       ]
     },
     "room_rules": [
       "Open-weather room: cast by social function first, not by fixed membership.",
-      "Use 0-2 real named public figures per scene unless Ryan explicitly asks for more.",
-      "Prefer fictional or lightly sketched background voices to preserve scale.",
+      "Default visible cast should be roughly 12 real/canon/public people plus 3 fictional/background voices.",
+      "Fictional background voices preserve scale but should not dominate the render.",
       "Alex is one high-status regular, not the host or owner of the room.",
       "Most visible traffic should already be moving before Alex appears."
     ],

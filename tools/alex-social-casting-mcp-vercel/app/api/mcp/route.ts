@@ -21,14 +21,22 @@ function findRoom(roomId: string) {
   return rooms.find(room => room.id === roomId);
 }
 
+function isRealOrCanon(person: any) {
+  return person.kind === 'public_candidate' || person.kind === 'canon_real' || person.kind === 'canon_fictional';
+}
+
+function isFictionalBackground(person: any) {
+  return person.kind === 'fictional_background';
+}
+
 function scorePerson(person: any, room: any, args: any, recentIds: Set<string>) {
   let score = 0;
   if (person.eligible_rooms?.includes(room.id)) score += 20;
   if (args.requiredTypes?.some((type: string) => person.types?.includes(type))) score += 8;
   if (args.location && person.regions?.some((region: string) => region.toLowerCase().includes(args.location.toLowerCase()))) score += 5;
-  if (person.kind === 'fictional_background') score += room.mode === 'open_weather' ? 8 : 1;
-  if (person.kind === 'public_candidate') score += room.mode === 'open_weather' ? 5 : 2;
-  if (person.kind === 'canon_real' || person.kind === 'canon_fictional') score += room.mode === 'closed' ? 10 : 2;
+  if (person.kind === 'fictional_background') score += room.casting_policy?.prefer_fictional_background ? 8 : 2;
+  if (person.kind === 'public_candidate') score += room.mode === 'open_weather' ? 8 : 2;
+  if (person.kind === 'canon_real' || person.kind === 'canon_fictional') score += room.mode === 'closed' ? 10 : 5;
   if (room.casting_policy?.fixed_member_ids?.includes(person.id)) score += 100;
   if (recentIds.has(person.id) && person.avoid_if_recently_used !== false) score -= 30;
   if (args.excludeIds?.includes(person.id)) score -= 1000;
@@ -53,9 +61,11 @@ function castRoom(room: any, args: any) {
   const recentIds = new Set(
     usageLog.filter(entry => entry.room_id === room.id).slice(-recentWindow).flatMap(entry => entry.person_ids)
   );
-  const maxPeople = args.maxPeople ?? 8;
-  const maxReal = args.maxRealNamedPublicFigures ?? room.casting_policy?.max_real_named_public_figures ?? 2;
-  const maxCanon = room.casting_policy?.max_canon_seed_names ?? 1;
+  const maxPeople = args.maxPeople ?? room.casting_policy?.default_total_visible ?? 15;
+  const targetReal = room.casting_policy?.target_real_named_people ?? Math.max(0, maxPeople - 3);
+  const targetBackground = room.casting_policy?.target_fictional_background ?? Math.max(0, maxPeople - targetReal);
+  const maxReal = args.maxRealNamedPublicFigures ?? room.casting_policy?.max_real_named_public_figures ?? targetReal;
+  const maxCanon = room.casting_policy?.max_canon_seed_names ?? 4;
 
   const scored = people
     .filter(person => person.eligible_rooms?.includes(room.id))
@@ -66,23 +76,46 @@ function castRoom(room: any, args: any) {
 
   const selected: any[] = [];
   let realCount = 0;
+  let backgroundCount = 0;
   let canonCount = 0;
+
   for (const item of scored) {
     if (selected.length >= maxPeople) break;
     const person = item.person;
-    const isReal = person.kind === 'public_candidate' || person.kind === 'canon_real';
+    const isBackground = isFictionalBackground(person);
+    const isRealNamed = person.kind === 'public_candidate' || person.kind === 'canon_real';
     const isCanon = person.kind === 'canon_real' || person.kind === 'canon_fictional';
-    if (isReal && realCount >= maxReal) continue;
+
+    if (isBackground && backgroundCount >= targetBackground) continue;
+    if (isRealNamed && realCount >= maxReal) continue;
     if (isCanon && canonCount >= maxCanon) continue;
-    selected.push(person);
-    if (isReal) realCount += 1;
-    if (isCanon) canonCount += 1;
+
+    if (isRealOrCanon(person) && realCount < targetReal) {
+      selected.push(person);
+      realCount += 1;
+      if (isCanon) canonCount += 1;
+      continue;
+    }
+
+    if (isBackground && selected.length >= targetReal) {
+      selected.push(person);
+      backgroundCount += 1;
+      continue;
+    }
+  }
+
+  if (selected.length < maxPeople) {
+    for (const item of scored) {
+      if (selected.length >= maxPeople) break;
+      if (selected.some(person => person.id === item.person.id)) continue;
+      selected.push(item.person);
+    }
   }
 
   return {
     room: { id: room.id, title: room.title, mode: room.mode, register: room.register },
     selected,
-    casting_note: 'Open-weather room: selected by social function first. Real names are capped and background voices preserve scale.',
+    casting_note: `Open-weather room: selected by social function first. Target ratio is ${targetReal} real/canon/public people to ${targetBackground} fictional/background voices.`,
     guardrails: room.room_rules
   };
 }

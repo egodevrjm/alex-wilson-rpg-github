@@ -30,6 +30,10 @@ function isFictionalBackground(person: any) {
   return person.kind === 'fictional_background';
 }
 
+function shuffled<T>(items: T[]): T[] {
+  return [...items].sort(() => Math.random() - 0.5);
+}
+
 function scorePerson(person: any, room: any, args: any, recentIds: Set<string>) {
   let score = 0;
   if (person.eligible_rooms?.includes(room.id)) score += 20;
@@ -41,10 +45,14 @@ function scorePerson(person: any, room: any, args: any, recentIds: Set<string>) 
   if (room.casting_policy?.fixed_member_ids?.includes(person.id)) score += 100;
   if (recentIds.has(person.id) && person.avoid_if_recently_used !== false) score -= 30;
   if (args.excludeIds?.includes(person.id)) score -= 1000;
-  const seedText = `${args.scene ?? ''}:${person.id}`;
-  let hash = 0;
-  for (let i = 0; i < seedText.length; i += 1) hash = (hash * 31 + seedText.charCodeAt(i)) >>> 0;
-  return score + (hash % 100) / 100;
+  return score + Math.random();
+}
+
+function rankPeople(pool: any[], room: any, args: any, recentIds: Set<string>) {
+  return shuffled(pool)
+    .map(person => ({ person, score: scorePerson(person, room, args, recentIds) }))
+    .sort((a, b) => b.score - a.score)
+    .map(item => item.person);
 }
 
 function castRoom(room: any, args: any) {
@@ -68,56 +76,57 @@ function castRoom(room: any, args: any) {
   const maxReal = args.maxRealNamedPublicFigures ?? room.casting_policy?.max_real_named_public_figures ?? targetReal;
   const maxCanon = room.casting_policy?.max_canon_seed_names ?? 4;
 
-  const scored = people
+  const eligible = people
     .filter(person => person.eligible_rooms?.includes(room.id))
     .filter(person => !args.excludeIds?.includes(person.id))
-    .filter(person => !args.requiredTypes?.length || args.requiredTypes.some((type: string) => person.types?.includes(type)))
-    .map(person => ({ person, score: scorePerson(person, room, args, recentIds) }))
-    .sort((a, b) => b.score - a.score);
+    .filter(person => !args.requiredTypes?.length || args.requiredTypes.some((type: string) => person.types?.includes(type)));
+
+  const realPool = rankPeople(eligible.filter(isRealOrCanon), room, args, recentIds);
+  const backgroundPool = rankPeople(eligible.filter(isFictionalBackground), room, args, recentIds);
+  const fallbackPool = rankPeople(eligible, room, args, recentIds);
 
   const selected: any[] = [];
   let realCount = 0;
   let backgroundCount = 0;
   let canonCount = 0;
 
-  for (const item of scored) {
+  for (const person of realPool) {
     if (selected.length >= maxPeople) break;
-    const person = item.person;
-    const isBackground = isFictionalBackground(person);
-    const isRealNamed = person.kind === 'public_candidate' || person.kind === 'canon_real';
+    if (realCount >= targetReal || realCount >= maxReal) break;
     const isCanon = person.kind === 'canon_real' || person.kind === 'canon_fictional';
-
-    if (isBackground && backgroundCount >= targetBackground) continue;
-    if (isRealNamed && realCount >= maxReal) continue;
     if (isCanon && canonCount >= maxCanon) continue;
-
-    if (isRealOrCanon(person) && realCount < targetReal) {
-      selected.push(person);
-      realCount += 1;
-      if (isCanon) canonCount += 1;
-      continue;
-    }
-
-    if (isBackground && selected.length >= targetReal) {
-      selected.push(person);
-      backgroundCount += 1;
-      continue;
-    }
+    selected.push(person);
+    realCount += 1;
+    if (isCanon) canonCount += 1;
   }
 
-  if (selected.length < maxPeople) {
-    for (const item of scored) {
-      if (selected.length >= maxPeople) break;
-      if (selected.some(person => person.id === item.person.id)) continue;
-      selected.push(item.person);
-    }
+  for (const person of backgroundPool) {
+    if (selected.length >= maxPeople) break;
+    if (backgroundCount >= targetBackground) break;
+    if (selected.some(existing => existing.id === person.id)) continue;
+    selected.push(person);
+    backgroundCount += 1;
+  }
+
+  for (const person of fallbackPool) {
+    if (selected.length >= maxPeople) break;
+    if (selected.some(existing => existing.id === person.id)) continue;
+    if (isFictionalBackground(person) && backgroundCount >= targetBackground) continue;
+    selected.push(person);
+    if (isFictionalBackground(person)) backgroundCount += 1;
+    if (isRealOrCanon(person)) realCount += 1;
   }
 
   return {
     room: { id: room.id, title: room.title, mode: room.mode, register: room.register },
-    selected,
-    casting_note: `Open-weather room: selected by social function first. Target ratio is ${targetReal} real/canon/public people to ${targetBackground} fictional/background voices.`,
-    guardrails: room.room_rules
+    selected: shuffled(selected),
+    casting_note: `Open-weather room: shuffled selection by social function. Target ratio is ${targetReal} real/canon/public people to ${targetBackground} fictional/background voices.`,
+    guardrails: room.room_rules,
+    counts: {
+      total: selected.length,
+      real_canon_public: realCount,
+      fictional_background: backgroundCount
+    }
   };
 }
 

@@ -1,0 +1,10 @@
+[
+  { "id": "social_chat_system", "title": "SOCIAL_CHAT_SYSTEM.md", "kind": "canon_document", "notes": "Overall group-chat rules." },
+  { "id": "social_summer_house", "title": "SOCIAL_SUMMER_HOUSE.md", "kind": "canon_document", "notes": "Summer House room rules." },
+  { "id": "social_brain_trust", "title": "SOCIAL_BRAIN_TRUST.md", "kind": "canon_document", "notes": "Brain Trust room rules." },
+  { "id": "public_pool_music", "title": "Music candidate pool", "kind": "manual_pool", "notes": "Curated name pool." },
+  { "id": "public_pool_actor", "title": "Actor candidate pool", "kind": "manual_pool", "notes": "Curated name pool." },
+  { "id": "public_pool_fashion", "title": "Fashion candidate pool", "kind": "manual_pool", "notes": "Curated name pool." },
+  { "id": "public_pool_sport", "title": "Sport candidate pool", "kind": "manual_pool", "notes": "Curated name pool." },
+  { "id": "generated_background", "title": "Generated background voices", "kind": "generated_background", "notes": "Invented background voice pool." }
+]

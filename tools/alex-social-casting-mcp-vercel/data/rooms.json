@@ -82,6 +82,108 @@
     "source_refs": ["social_phoenix_hollow", "social_chat_system"]
   },
   {
+    "id": "legacy",
+    "title": "Legacy",
+    "mode": "server",
+    "scale": "314-member Discord-style famous-child server with channels",
+    "function": "Children and grandchildren of famous people; channel-based famous-child weather, career envy, dating sagas, travel, events and meta famous-parent politics.",
+    "register": "Famous-child shorthand, ruthless familiarity, image-aware, multilingual, often filthy and funny; many lurkers.",
+    "source_policy": "Legacy is not one flat chat. Cast by channel and channel access. Do not render Legacy generically if a channel is implied.",
+    "channels": ["young_adults", "legacy_of_legends", "general", "travelling_right_now", "events", "issues", "fashion_week", "politics_of_having_famous_parents", "teens", "older"],
+    "casting_policy": {
+      "default_total_visible": 14,
+      "target_real_named_people": 11,
+      "target_fictional_background": 3,
+      "max_real_named_public_figures": 11,
+      "max_canon_seed_names": 4,
+      "prefer_fictional_background": false,
+      "avoid_recent_window": 2,
+      "forbidden": [
+        "Do not collapse Legacy into Brain Trust.",
+        "Do not render under-18 #teens content for Alex unless Ryan explicitly calls for a cut scene or appropriate channel view.",
+        "Do not treat access to one Legacy channel as access to all channels.",
+        "Do not assert private claims about real public figures."
+      ]
+    },
+    "room_rules": [
+      "Legacy is a server, not a single chat; render the channel-of-the-moment.",
+      "Default visible cast should be roughly 11 real/canon/public people plus 3 fictional/background voices.",
+      "Brain Trust members and close-orbit names are only one slice of the server.",
+      "Use unread counts, side threads and reaction floods to imply the 314-member scale.",
+      "Alex is peripheral here: reactions, jokes and occasional lines, not structural centre."
+    ],
+    "source_refs": ["social_legacy", "social_chat_system"]
+  },
+  {
+    "id": "london_lot",
+    "title": "London Lot",
+    "mode": "open_weather",
+    "scale": "150-300+ pre-existing London young-society and culture room",
+    "function": "London cultural traffic: dinners, private views, premieres, fashion events, clubs, members' rooms, who-is-in-town pings and house curiosity.",
+    "register": "Big London young-society/culture room; quick, social, dry, visual, party-literate, not Alex's group.",
+    "source_policy": "Use London-facing cultural fit first. Seed names are not the whole room. Alex is one socially-fluent visitor among many.",
+    "casting_policy": {
+      "default_total_visible": 16,
+      "target_real_named_people": 13,
+      "target_fictional_background": 3,
+      "max_real_named_public_figures": 13,
+      "max_canon_seed_names": 6,
+      "prefer_fictional_background": false,
+      "avoid_recent_window": 2,
+      "default_slots": [
+        { "type": "music", "min": 2, "max": 4 },
+        { "type": "actor", "min": 1, "max": 3 },
+        { "type": "fashion", "min": 3, "max": 5 },
+        { "type": "art", "min": 1, "max": 3 },
+        { "type": "legacy", "min": 2, "max": 5 },
+        { "type": "fictional_background", "min": 2, "max": 3 }
+      ],
+      "forbidden": [
+        "Do not make London Lot Alex's group.",
+        "Do not repeatedly default to Brain Trust names.",
+        "Do not let fictional voices dominate the visible cast.",
+        "Do not assert private claims about real public figures."
+      ]
+    },
+    "room_rules": [
+      "London Lot exists before and beyond Alex; he drops into mid-motion London cultural traffic.",
+      "Default visible cast should be roughly 13 real/canon/public London-facing names plus 3 fictional/background voices.",
+      "Use culturally hot London weather: openings, launches, clubs, dinners, fashion drops and who-is-in-town pings.",
+      "Scale anchors calibrate the room; they are not mandatory speakers."
+    ],
+    "source_refs": ["social_london_lot", "social_chat_system"]
+  },
+  {
+    "id": "press_picture_desk",
+    "title": "Press / Picture Desk",
+    "mode": "closed_roles",
+    "scale": "~8 role-based tabloid and picture-desk decision-makers",
+    "function": "Media mechanics room: picture selection, pricing, source tips, embargoes, legal letters, kill/push decisions and story packaging.",
+    "register": "Cynical, transactional, fast, commercial; role names only unless Ryan locks real names.",
+    "source_policy": "Use role placeholders, not real living editors. This room shows decision-making, not published copy.",
+    "casting_policy": {
+      "default_total_visible": 8,
+      "target_real_named_people": 0,
+      "target_fictional_background": 0,
+      "fixed_role_room": true,
+      "prefer_fictional_background": false,
+      "avoid_recent_window": 0,
+      "forbidden": [
+        "Do not use real living editor names unless Ryan locks them.",
+        "Do not write this as a personal chat with Alex.",
+        "Do not claim the press knows private chats; they know pictures, sources, embargoes and legal traffic.",
+        "Do not render the finished article here; render the decision-making room."
+      ]
+    },
+    "room_rules": [
+      "Closed role-room: return role placeholders only.",
+      "Press / Picture Desk sees pap-side reality, legal-letter traffic, picture pricing and source-tip volume.",
+      "It does not know private chats exist and does not know Alex personally.",
+      "Use in cut scenes for media mechanics, then let media-renderer handle the published article."
+    ],
+    "source_refs": ["social_press_picture_desk", "social_chat_system"]
+  },
+  {
     "id": "brain_trust",
     "title": "Brain Trust",
     "mode": "closed",

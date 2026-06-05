@@ -1,6 +1,6 @@
 {
   "name": "alex-social-casting-mcp-vercel",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": true,
   "description": "Remote HTTP MCP server for Alex Wilson social-room casting, deployable to Vercel.",
   "type": "module",
@@ -13,14 +13,14 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.26.0",
     "mcp-handler": "1.1.0",
-    "next": "15.3.8",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
     "zod": "3.25.76"
   },
   "devDependencies": {
     "@types/node": "22.15.30",
-    "@types/react": "19.0.12",
+    "@types/react": "latest",
     "typescript": "5.8.3"
   },
   "engines": {

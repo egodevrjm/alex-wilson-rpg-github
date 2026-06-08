@@ -1,5 +1,6 @@
 import people from '@/data/people.json';
 import btPeople from '@/data/brain-trust-people.json';
+import boysPeople from '@/data/boys-people.json';
 import phoenixPeople from '@/data/phoenix-people.json';
 import londonLotPeople from '@/data/london-lot-people.json';
 import legacyPeople from '@/data/legacy-people.json';
@@ -31,7 +32,8 @@ export async function GET(request: Request, { params }: Params) {
     ...(londonLotPeople as any[]),
     ...(legacyPeople as any[]),
     ...(pressPictureDeskPeople as any[]),
-    ...(btPeople as any[])
+    ...(btPeople as any[]),
+    ...(boysPeople as any[])
   ]);
 
   const eligible_people = allPeople

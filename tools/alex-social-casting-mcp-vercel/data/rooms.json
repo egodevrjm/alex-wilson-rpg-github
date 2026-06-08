@@ -187,16 +187,18 @@
     "id": "brain_trust",
     "title": "Brain Trust",
     "mode": "closed",
-    "scale": "6 including Alex",
-    "function": "Alex's closest mutual intimate friend room.",
-    "register": "Fast, emotionally accurate, teasing, public-childhood shorthand.",
-    "source_policy": "Canon locked. Do not add members unless Ryan changes the canon.",
+    "scale": "8 including Alex",
+    "function": "Alex's closest mutual intimate peer room; the tight reciprocal offshoot of Legacy.",
+    "register": "Fast, emotionally accurate, teasing, public-childhood shorthand. Friendship-only, not romance and not handlers.",
+    "source_policy": "Canon locked. Do not add people unless Ryan explicitly changes the canon.",
     "casting_policy": {
-      "fixed_member_ids": ["alex_wilson", "apple_martin", "iris_law", "lila_moss", "kaia_gerber", "rocco_ritchie"]
+      "fixed_member_ids": ["alex_wilson", "apple_martin", "iris_law", "lila_moss", "kaia_gerber", "rocco_ritchie", "lucas_jagger", "willow_smith"]
     },
     "room_rules": [
       "Closed room: return canon members only.",
-      "Not handlers, staff, strategists, siblings or an Alex-response unit."
+      "Eight members including Alex: Apple, Iris, Lila, Kaia, Rocco, Lucas Jagger and Willow Smith.",
+      "None of the Brain Trust members are Alex's casual partners; his sex life runs outside this lifelong-friend room.",
+      "Not handlers, staff, strategists, siblings, automatic romance, or an Alex-response unit."
     ],
     "source_refs": ["social_brain_trust"]
   }

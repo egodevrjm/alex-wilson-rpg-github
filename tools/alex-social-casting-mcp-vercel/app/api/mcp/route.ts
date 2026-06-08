@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { createMcpHandler } from 'mcp-handler';
 import peopleData from '@/data/people.json';
 import btPeopleData from '@/data/brain-trust-people.json';
+import boysPeopleData from '@/data/boys-people.json';
 import phoenixPeopleData from '@/data/phoenix-people.json';
 import londonLotPeopleData from '@/data/london-lot-people.json';
 import legacyPeopleData from '@/data/legacy-people.json';
@@ -25,7 +26,8 @@ const people = dedupePeople([
   ...(londonLotPeopleData as any[]),
   ...(legacyPeopleData as any[]),
   ...(pressPictureDeskPeopleData as any[]),
-  ...(btPeopleData as any[])
+  ...(btPeopleData as any[]),
+  ...(boysPeopleData as any[])
 ]);
 const rooms = roomsData as any[];
 const sources = sourcesData as any[];

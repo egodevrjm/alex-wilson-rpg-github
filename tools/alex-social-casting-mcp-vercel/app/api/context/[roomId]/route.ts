@@ -1,4 +1,5 @@
 import people from '@/data/people.json';
+import btPeople from '@/data/brain-trust-people.json';
 import phoenixPeople from '@/data/phoenix-people.json';
 import londonLotPeople from '@/data/london-lot-people.json';
 import legacyPeople from '@/data/legacy-people.json';
@@ -9,6 +10,12 @@ export const dynamic = 'force-dynamic';
 
 type Params = { params: Promise<{ roomId: string }> };
 
+function dedupe(items: any[]) {
+  const byId = new Map<string, any>();
+  for (const item of items) byId.set(item.id, item);
+  return Array.from(byId.values());
+}
+
 export async function GET(request: Request, { params }: Params) {
   const { roomId } = await params;
   const url = new URL(request.url);
@@ -18,13 +25,14 @@ export async function GET(request: Request, { params }: Params) {
     return Response.json({ error: `Unknown room id: ${roomId}` }, { status: 404 });
   }
 
-  const allPeople = [
+  const allPeople = dedupe([
     ...(people as any[]),
     ...(phoenixPeople as any[]),
     ...(londonLotPeople as any[]),
     ...(legacyPeople as any[]),
-    ...(pressPictureDeskPeople as any[])
-  ];
+    ...(pressPictureDeskPeople as any[]),
+    ...(btPeople as any[])
+  ]);
 
   const eligible_people = allPeople
     .filter(person => person.eligible_rooms?.includes(roomId))

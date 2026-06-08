@@ -184,6 +184,25 @@
     "source_refs": ["social_press_picture_desk", "social_chat_system"]
   },
   {
+    "id": "boys",
+    "title": "Boys",
+    "mode": "closed",
+    "scale": "12 including Alex",
+    "function": "Lads' group chat Alex was added to; school-era male friend group grown by accretion.",
+    "register": "Brutal affection, schoolboy shorthand, more physical than gossipy. Alex is one voice, not the owner.",
+    "source_policy": "Canon locked. Do not invent members; the in-world group grows by consensus but canon changes only when Ryan locks them.",
+    "casting_policy": {
+      "fixed_member_ids": ["alex_wilson", "jonathan_dawson", "lucas_ashby", "freddie_ashworth", "hugo_manners", "seb_lennox", "tom_harington", "gabriel_chen", "rocco_ritchie", "romeo_beckham", "gene_gallagher", "lucas_jagger"]
+    },
+    "room_rules": [
+      "Closed room: return canon members only.",
+      "This is not Alex's chat; Hugo Manners added him and the room has a life of its own.",
+      "Boys is distinct from Brain Trust and Westminster Leavers: it is the tighter lads' chat that simply kept going.",
+      "No Serena/AW/Walker operational access."
+    ],
+    "source_refs": ["social_boys"]
+  },
+  {
     "id": "brain_trust",
     "title": "Brain Trust",
     "mode": "closed",

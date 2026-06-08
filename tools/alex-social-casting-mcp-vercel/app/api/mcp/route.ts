@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { createMcpHandler } from 'mcp-handler';
 import peopleData from '@/data/people.json';
+import btPeopleData from '@/data/brain-trust-people.json';
 import phoenixPeopleData from '@/data/phoenix-people.json';
 import londonLotPeopleData from '@/data/london-lot-people.json';
 import legacyPeopleData from '@/data/legacy-people.json';
@@ -12,13 +13,20 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 export const maxDuration = 60;
 
-const people = [
+function dedupePeople(items: any[]) {
+  const byId = new Map<string, any>();
+  for (const item of items) byId.set(item.id, item);
+  return Array.from(byId.values());
+}
+
+const people = dedupePeople([
   ...(peopleData as any[]),
   ...(phoenixPeopleData as any[]),
   ...(londonLotPeopleData as any[]),
   ...(legacyPeopleData as any[]),
-  ...(pressPictureDeskPeopleData as any[])
-];
+  ...(pressPictureDeskPeopleData as any[]),
+  ...(btPeopleData as any[])
+]);
 const rooms = roomsData as any[];
 const sources = sourcesData as any[];
 const usageLog: any[] = [];

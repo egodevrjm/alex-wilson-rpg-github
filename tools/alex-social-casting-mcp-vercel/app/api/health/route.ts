@@ -1,5 +1,6 @@
 import people from '@/data/people.json';
 import btPeople from '@/data/brain-trust-people.json';
+import boysPeople from '@/data/boys-people.json';
 import phoenixPeople from '@/data/phoenix-people.json';
 import londonLotPeople from '@/data/london-lot-people.json';
 import legacyPeople from '@/data/legacy-people.json';
@@ -21,7 +22,8 @@ export async function GET() {
     ...(londonLotPeople as any[]),
     ...(legacyPeople as any[]),
     ...(pressPictureDeskPeople as any[]),
-    ...(btPeople as any[])
+    ...(btPeople as any[]),
+    ...(boysPeople as any[])
   ]);
 
   return Response.json({
@@ -31,11 +33,12 @@ export async function GET() {
     rooms: (rooms as any[]).length,
     people: allPeople.length,
     brain_trust_eligible: allPeople.filter(person => person.eligible_rooms?.includes('brain_trust')).length,
+    boys_eligible: allPeople.filter(person => person.eligible_rooms?.includes('boys')).length,
     summer_house_eligible: allPeople.filter(person => person.eligible_rooms?.includes('summer_house')).length,
     phoenix_hollow_eligible: allPeople.filter(person => person.eligible_rooms?.includes('phoenix_hollow')).length,
     london_lot_eligible: allPeople.filter(person => person.eligible_rooms?.includes('london_lot')).length,
     legacy_eligible: allPeople.filter(person => person.eligible_rooms?.includes('legacy')).length,
     press_picture_desk_eligible: allPeople.filter(person => person.eligible_rooms?.includes('press_picture_desk')).length,
-    version_note: 'includes latest group rollout'
+    version_note: 'includes Boys, Brain Trust and wide-room rollout'
   });
 }
